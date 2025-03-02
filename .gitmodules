@@ -1,0 +1,3 @@
+[submodule "cariol-client"]
+	path = cariol-client
+	url = ./cariol-client
