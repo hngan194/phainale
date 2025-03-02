@@ -1,0 +1,22 @@
+body,
+html {
+  padding: 0;
+  margin: 0;
+}
+.page2, .main, .page3{
+    width: 1050px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+.image{
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.image img {
+  width: 300px;
+  margin: 20px;
+}
+
+  

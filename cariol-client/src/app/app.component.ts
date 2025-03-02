@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
+import { AboutusComponent } from './components/aboutus/aboutus.component';
 
 @Component({
+  standalone: true, // Dùng standalone
   selector: 'app-root',
   templateUrl: './app.component.html',
-  standalone: false,
-  styleUrl: './app.component.css'
+  styleUrls: ['./app.component.css'],
+  imports: [AboutusComponent] // Import AboutusComponent vào đây
 })
-export class AppComponent {
-  title = 'cariol-client';
-}
+export class AppComponent { }

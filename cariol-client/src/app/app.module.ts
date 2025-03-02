@@ -1,22 +1,10 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AboutusComponent } from './components/aboutus/aboutus.component';
-import { BlogComponent } from './components/blog/blog.component';
+import { AboutusComponent } from './components/aboutus/aboutus.component'; // Import AboutusComponent
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    AboutusComponent,
-    BlogComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule
-  ],
-  providers: [],
+  imports: [BrowserModule, AboutusComponent], // Import thay vì declarations
   bootstrap: [AppComponent]
 })
 export class AppModule { }

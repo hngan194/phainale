@@ -1,11 +1,9 @@
 import { Component } from '@angular/core';
 
 @Component({
+  standalone: true, // Đây là một component độc lập
   selector: 'app-aboutus',
-  standalone: false,
   templateUrl: './aboutus.component.html',
-  styleUrl: './aboutus.component.css'
+  styleUrls: ['./aboutus.component.css']
 })
-export class AboutusComponent {
-
-}
+export class AboutusComponent { }
