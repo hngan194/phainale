@@ -5,8 +5,7 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { BlogComponent } from './components/blog/blog.component';  // Đảm bảo import đúng BlogComponent
 import { AppRoutingModule } from './app-routing.module';  // Đảm bảo đã import AppRoutingModule
-import { HttpClient } from '@angular/common/http';
-
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 @NgModule({
   declarations: [
     AppComponent,
@@ -18,7 +17,9 @@ import { HttpClient } from '@angular/common/http';
     FormsModule,  // Đảm bảo FormsModule được import
     AppRoutingModule,  // Đảm bảo AppRoutingModule đã được import
     RouterModule,  // Đảm bảo RouterModule đã được import
-    HttpClient
+  ],
+  providers: [
+    provideHttpClient(withInterceptorsFromDi()), // New way
   ],
   bootstrap: [AppComponent]
 })
