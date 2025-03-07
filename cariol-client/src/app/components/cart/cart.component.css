@@ -1,0 +1,162 @@
+/* cart.component.css */
+
+/* Lớp nền tối khi modal hiển thị */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); 
+    /* Nền tối với độ mờ */
+    z-index: 999;
+  }
+  
+  /* Modal Giỏ hàng */
+  .modal {
+    position: fixed;
+    top: 52%;
+    left: 85%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    background: #ffffff; /* Đảm bảo modal có nền sáng */
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    opacity: 1;
+    width: 350px;
+  }
+  
+  .modal-content {
+    padding: 20px;
+  }
+  
+  /* Modal Header */
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 5px;
+    color: #675654;
+  }
+  
+  .modal-header h2 {
+    margin: 0;
+    font-size: 25px;
+  }
+  
+  .close-btn {
+    font-size: 30px;
+    cursor: pointer;
+    border: none;
+    background: none;
+  }
+  
+  /* Danh sách sản phẩm */
+  .cart-items {
+    max-height: 300px;
+    overflow-y: auto;
+  }
+  
+  .cart-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    position: relative;
+  }
+  
+  .item-img {
+    width: 100px;
+    height: 100px;
+    border-radius: 5px;
+    margin-right: 10px;
+  }
+  
+  .item-info {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .item-name {
+    font-weight: bold;
+    margin-bottom: 2px;
+  }
+  
+  .item-category {
+    margin-bottom: 5px;
+    color: #837975;
+  }
+  
+  .item-quantity {
+    display: flex;
+    align-items: center;
+  }
+  
+  .quantity {
+    width: 30px;
+    text-align: center;
+    border: none;
+    background: none;
+    font-size: 14px;
+  }
+  
+  .quantity-btn {
+    background: none;
+    border: 1px solid #ccc;
+    padding: 2px 6px;
+    cursor: pointer;
+    width: 25px;
+    height: 25px;
+  }
+  
+  .price {
+    color: #da323e;
+    font-weight: bold;
+  }
+  
+  .remove-btn {
+    background: none;
+    border: none;
+    color: red;
+    cursor: pointer;
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  
+  .cart-total {
+    font-weight: bold;
+    text-align: right;
+    margin-top: 10px;
+  }
+  
+  .modal-footer {
+    text-align: center;
+    margin-top: 15px;
+    padding-top: 20px;
+    border-top: 1px solid #ddd;
+  }
+  
+  .detail-btn, .checkout-btn {
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 120px;
+    margin: 5px;
+  }
+  
+  .detail-btn {
+    background: #6c5b5b;
+    color: white;
+  }
+  
+  .checkout-btn {
+    background: #da323e;
+    color: white;
+  }
+  
