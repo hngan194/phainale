@@ -1,21 +1,37 @@
-require('dotenv').config(); // Load biến môi trường từ .env
-const mongoose = require('mongoose');
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config()
+}
 
-// Lấy URI từ file .env
-const mongoURI = process.env.MONGO_URI;
-
-// Kết nối đến MongoDB
-mongoose.connect(mongoURI);
-
-// Khởi động server Node.js (nếu cần)
 const express = require('express');
 const app = express();
+const expressLayout = require('express-ejs-layouts');
 
-app.get("/", (req, res) => {
-    res.send("Server đang chạy và kết nối MongoDB thành công!");
-});
+const indexRouter = require('./src/routes/index')
+const Router = require('./src/routes/index');
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`🚀 Server đang chạy tại http://localhost:${PORT}`);
-});
+app.set('view engine', 'ejs');
+app.set('views', __dirname + '/views');
+app.set('layout', 'layouts/layout')
+app.use(expressLayout)
+app.use(express.static('public'))
+
+const cors = require('cors')
+app.use(cors())
+
+const mongoose = require('mongoose');
+mongoose.connect(process.env.DATABASE_URL,{
+    dbname: process.env.DATABASE_NAME,
+})
+
+const db = mongoose.connection
+
+db.on('error', error => console.error("Lỗi rồi : " + error))
+db.once('open',() => console.log('Connected to Mongoose'))
+
+app.use(express.json())
+
+app.use('/', indexRouter)
+
+app.use('/api', cors(), Router)
+
+app.listen(process.env.PORT || 3000)

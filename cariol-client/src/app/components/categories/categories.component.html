@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Gentle Petals</title>
+    <link rel="stylesheet" href="categories.css">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body>
+        <div class="page2">
+            <p class="text-xl font-bold pb-4 pt-4">Sản phẩm</p>
+            <div class="main2">
+                <div class="choose">
+                    <div class="danhmuc"> Danh mục </div>
+                    <div class="danhmuc2" >
+                        <a routerLink="#"> All product</a>
+                        <hr>
+                        <div *ngFor="let categorie of categories" (click)="someFunction1(categorie)">
+                            <p> {{ categorie.name }} </p>
+                            <hr>
+                        </div>
+                    </div>
+                </div>
+
+            <div class="display">
+                <div class="hihihi">
+                    <div class="hihi">
+                        <p class="font-bold">Product</p>
+                    </div>
+                    <div class="hi">
+                        <label class="font-bold" for="sx">Sắp xếp theo</label>
+                        <select id="sx">
+                            <option> Mặc định</option>
+                            <option> A to Z </option>
+                        </select>
+                    </div>
+                </div>
+                <hr><br>
+                <div id="content">
+                    <div *ngFor="let product of products" class="product" (click)="someFunction(product)">
+                        <img [src]="product.image" width="160px" />
+                        <hr>
+                        <p class="name">{{ product.name }}</p>
+                        <p class="price">{{ product.price }} VNĐ</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+</body>
+
+</html>

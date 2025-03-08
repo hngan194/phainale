@@ -1,13 +1,17 @@
-const mongoose = require('mongoose');
+// /cariol-server/models/blog.js
 
-const Schema = mongoose.Schema
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 const blogSchema = new Schema({
     title: {
         type: String,
         required: true,
     },
-    image: {
+    image_url: {   // Thêm trường để lưu URL của hình ảnh từ Cloudinary
+        type: String,
+    },
+    image_public_id: {  // Thêm trường để lưu public_id từ Cloudinary
         type: String,
     },
     content: {
@@ -19,8 +23,8 @@ const blogSchema = new Schema({
         ref : 'Account',
         required: true,
     },
-})
+}, { timestamps: true });
 
-const Blog = mongoose.model('Blog', blogSchema)
+const Blog = mongoose.model('Blog', blogSchema);
 
-module.exports = {Blog}
+module.exports = { Blog };

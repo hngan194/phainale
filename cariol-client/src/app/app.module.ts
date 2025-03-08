@@ -15,9 +15,7 @@ import { AlertService } from './services/alert.service';
 import { CartComponent } from './components/cart/cart.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
-
-
-
+import { CategoriesComponent } from './components/categories/categories.component';
 @NgModule({
   declarations: [
     BlogComponent,
@@ -27,7 +25,8 @@ import { AppRoutingModule } from './app-routing.module';
     LoginComponent,
     RegisterComponent,
     ForgotPasswordComponent,
-    CartComponent
+    CartComponent,
+    CategoriesComponent
   ],
   imports: [
     BrowserModule,
