@@ -1,0 +1,15 @@
+<nav class="sidebar">
+    <a routerLink="/signin-account" routerLinkActive="active-tab" class="nav-item">
+        Tài khoản đăng nhập
+    </a>
+    <a routerLink="/edit-profile" routerLinkActive="active-tab" class="nav-item">
+        Thay đổi thông tin
+    </a>
+    <a routerLink="/change-password" routerLinkActive="active-tab" class="nav-item">
+        Đổi mật khẩu
+    </a>
+
+    <div class="logout-container">
+        <button type="button" class="logout-button" (click)="logout()">Đăng xuất</button>
+    </div>
+</nav>

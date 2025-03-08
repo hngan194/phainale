@@ -1,0 +1,71 @@
+/* Định dạng tổng thể */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+}
+
+/* Lớp chính */
+.page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Phần chính */
+.page2 {
+    width: 80%;
+    max-width: 800px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Tiêu đề bài viết */
+.blog-title {
+    font-weight: bold;
+    padding-top: 20px;
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+/* Đường kẻ ngang */
+hr {
+    border: none;
+    height: 2px;
+    background-color: #ccc;
+    margin-bottom: 20px;
+}
+
+/* Vùng chứa bài viết */
+.blog2 {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Mỗi bài viết */
+.blog-item {
+    padding: 15px;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.blog-item:hover {
+    background-color: #f0f0f0;
+    transform: scale(1.02);
+}
+
+/* Văn bản bài viết */
+.blog-text {
+    font-size: 18px;
+    color: #333;
+    margin: 0;
+}

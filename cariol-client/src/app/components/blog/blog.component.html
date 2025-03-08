@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Cariol</title>
+    <link rel="stylesheet" href="blog.component.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+</head>
+
+<body>
+    <div class="page">
+        <div class="page2">
+            <div class="blog">
+                <p class="blog-title">Các bài viết</p>
+                <hr>
+
+                <div class="blog2">
+                    <div class="blog-item" *ngFor="let blog of blogs" (click)="someFunction(blog)">
+                        <!-- <img [src]="'assets/' + blog.image" width="160px" /> -->
+                        <p class="blog-text">{{blog.title}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

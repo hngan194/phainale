@@ -1,0 +1,52 @@
+/* Sidebar chính */
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  width: 210px;
+  background-color: #efebe9;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+}
+
+/* Các mục menu */
+.nav-item {
+  display: block;
+  padding: 16px 14px;
+  font-size: 16px;
+  font-weight: 400;
+  color: #675654;
+  text-decoration: none;
+  border-bottom: 1px solid #eee;
+  transition: background 0.2s;
+}
+
+.nav-item:hover {
+  background-color: #f3f3f3;
+  font-weight: bolder;
+}
+
+/* Container cho nút đăng xuất */
+.logout-container {
+  padding: 14px;
+  text-align: center;
+}
+
+/* Nút đăng xuất */
+.logout-button {
+  padding: 10px 18px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #675654;
+  background: none;
+  border: 2px solid #675654;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.logout-button:hover {
+  background: #675654;
+  color: white;
+}
