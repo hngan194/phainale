@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CategoriesService } from '../_services/categories.service';
-import { Product } from '../_models/product';
-import { HomepageService } from '../_services/homepage.service';
+import { CategoriesService } from '../../services/categories.service';
+import { Product } from '../../models/product';
+import { ProductService } from '../../services/product.service';
 
 @Component({
   selector: 'app-categories',
@@ -15,7 +15,7 @@ export class CategoriesComponent implements OnInit {
   selectedCode: any
   categories: any[] = [];
 
-  constructor(private route: ActivatedRoute, private _cservice: CategoriesService, private _service: HomepageService, private _router: Router) {}
+  constructor(private route: ActivatedRoute, private _cservice: CategoriesService, private _service: ProductService, private _router: Router) {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((param) => {

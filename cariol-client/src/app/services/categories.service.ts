@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, map, Observable, retry, throwError } from 'rxjs';
-import { Category } from '../_models/category'; // Assuming you have a Category model
-import { Product } from '../_models/product';
+import { Category } from '../models/category'; // Assuming you have a Category model
+import { Product } from '../models/product';
 
 @Injectable({
   providedIn: 'root'

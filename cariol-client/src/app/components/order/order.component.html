@@ -1,0 +1,114 @@
+<div class="checkout-container">
+  <div class="checkout-header">
+    <div class="progress-steps">
+      <div class="step completed">
+        <div class="step-circle">1</div>
+        <span>Đăng nhập</span>
+      </div>
+      <div class="step-line"></div>
+      <div class="step active">
+        <div class="step-circle">2</div>
+        <span>Thông tin</span>
+      </div>
+      <div class="step-line"></div>
+      <div class="step">
+        <div class="step-circle">3</div>
+        <span>Thanh toán</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="checkout-content">
+    <div>
+      <div class="checkout-info">
+        <div class="form-section-title">Thông tin nhận hàng</div>
+        <form (ngSubmit)="goToPayment()" #orderForm="ngForm">
+          <div class="form-group">
+            <input type="text" [(ngModel)]="orderInfo.fullName" name="fullName" required placeholder="Họ và tên">
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group half">
+              <input type="email" [(ngModel)]="orderInfo.email" name="email" placeholder="Email (không bắt buộc)">
+            </div>
+            <div class="form-group half">
+              <input type="tel" [(ngModel)]="orderInfo.phone" name="phone" required pattern="^0[0-9]{9}$" placeholder="Số điện thoại">
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <input type="text" [(ngModel)]="orderInfo.address" name="address" required placeholder="Số nhà và tên đường">
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group third">
+              <label for="province">Tỉnh/Thành phố:</label>
+              <select [(ngModel)]="selectedProvince" (change)="onProvinceChange()" name="province" required>
+                <option value="" disabled selected>Tỉnh thành</option>
+                <option *ngFor="let province of provinces" [ngValue]="province">{{ province.name }}</option>
+              </select>
+            </div>
+            
+            <div class="form-group third">
+              <label for="district">Quận/Huyện:</label>
+              <select [(ngModel)]="selectedDistrict" (change)="onDistrictChange()" name="district" [disabled]="!selectedProvince" required>
+                <option value="" disabled selected>Quận/Huyện</option>
+                <option *ngFor="let district of districts" [ngValue]="district">{{ district.name }}</option>
+              </select>
+            </div>
+            
+            <div class="form-group third">
+              <label for="ward">Phường/Xã:</label>
+              <select [(ngModel)]="selectedWard" name="ward" [disabled]="!selectedDistrict" required>
+                <option value="" disabled selected>Phường/Xã</option>
+                <option *ngFor="let ward of wards" [ngValue]="ward">{{ ward.name }}</option>
+              </select>
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
+
+    <div>
+      <div class="product-summary">
+        <div class="product-item">
+          <div class="product-image">
+            <img [src]="product.image" alt="{{ product.name }}">
+          </div>
+          <div class="product-details">
+            <div class="product-name">{{ product.name }}</div>
+            <div class="product-color">{{ selectedColor }}</div>
+          </div>
+          <div class="product-price">{{ product.price | currency:'VND':'symbol-narrow':'1.0-0' }}</div>
+        </div>
+  
+        <div class="coupon-section">
+          <div class="coupon-input">
+            <input type="text" [(ngModel)]="discountCode" name="discountCode" placeholder="Mã code">
+            <button class="btn-apply">Áp dụng</button>
+          </div>
+        </div>
+  
+        <div class="order-totals">
+          <div class="total-row">
+            <span>Tạm tính</span>
+            <span class="price">{{ totalPrice | currency:'VND':'symbol-narrow':'1.0-0' }}</span>
+          </div>
+          <div class="total-row">
+            <span>Phí vận chuyển</span>
+            <span class="price">—</span>
+          </div>
+          <div class="total-row grand-total">
+            <span>Tổng tiền</span>
+            <span class="price">{{ totalPrice | currency:'VND':'symbol-narrow':'1.0-0' }}</span>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="button" class="back-link" (click)="goToCart()">Giỏ hàng</button>
+          <button type="submit" class="btn-payment" (click)="goToPayment()" [disabled]="orderForm.invalid">THANH TOÁN</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

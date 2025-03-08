@@ -1,0 +1,70 @@
+<div class="profile-container">
+    <!-- Sidebar -->
+    <app-sidebar></app-sidebar>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <h2 class="page-title">Thay đổi thông tin</h2>
+
+        <form (ngSubmit)="onSubmit()" #form="ngForm" class="profile-form">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="ho" class="form-label">Họ</label>
+                    <input type="text" id="ho" name="ho" class="form-input"
+                        [(ngModel)]="profile.lastName" #ho="ngModel" required
+                        [ngClass]="{ 'input-error': ho.invalid && (ho.dirty || ho.touched) }">
+                    <div *ngIf="ho.invalid && (ho.dirty || ho.touched)" class="error-message">
+                        <span *ngIf="ho.errors?.['required']">Họ là trường bắt buộc</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="ten" class="form-label">Tên</label>
+                    <input type="text" id="ten" name="ten" class="form-input"
+                        [(ngModel)]="profile.firstName" #ten="ngModel" required
+                        [ngClass]="{ 'input-error': ten.invalid && (ten.dirty || ten.touched) }">
+                    <div *ngIf="ten.invalid && (ten.dirty || ten.touched)" class="error-message">
+                        <span *ngIf="ten.errors?.['required']">Tên là trường bắt buộc</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="so-dien-thoai" class="form-label">Số điện thoại</label>
+                    <input type="number" id="so-dien-thoai" name="so-dien-thoai" class="form-input"
+                        [(ngModel)]="profile.phoneNumber" #soDienThoai="ngModel">
+                </div>
+                <div class="form-group">
+                    <label for="dia-chi" class="form-label">Địa chỉ</label>
+                    <input type="text" id="dia-chi" name="dia-chi" class="form-input"
+                        [(ngModel)]="profile.address" #diaChi="ngModel">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="quan-huyen" class="form-label">Quận/Huyện</label>
+                    <input type="text" id="quan-huyen" name="quan-huyen" class="form-input"
+                        [(ngModel)]="profile.city" #quanHuyen="ngModel">
+                </div>
+                <div class="form-group">
+                    <label for="tinh-thanh-pho" class="form-label">Tỉnh/Thành phố</label>
+                    <input type="text" id="tinh-thanh-pho" name="tinh-thanh-pho" class="form-input"
+                        [(ngModel)]="profile.state" #tinhThanhPho="ngModel">
+                </div>
+                <div class="form-group">
+                    <label for="quoc-gia" class="form-label">Quốc gia</label>
+                    <input type="text" id="quoc-gia" name="quoc-gia" class="form-input"
+                        [(ngModel)]="profile.country" #quocGia="ngModel">
+                </div>
+            </div>
+
+            <div class="button-container">
+                <button type="submit" [disabled]="!form.valid" class="submit-button">
+                    Lưu thay đổi
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

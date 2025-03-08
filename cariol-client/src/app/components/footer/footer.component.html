@@ -1,0 +1,54 @@
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-group">
+            <h2>Cariol</h2>
+            <p><img src="assets/images/location.png" alt=""> 669 Đỗ Mười, KP 6, P. Linh Xuân, TP. Thủ Đức, TP.HCM.</p>
+            <p><img src="assets/images/phone-call.png" alt=""> 0967663867</p>
+            <p><img src="assets/images/mail.png" alt=""> info&#64;cariol.com</p>
+        </div>
+
+        <div class="footer-group">
+            <h2>Thông tin</h2>
+            <a href="#">Trang chủ</a>
+            <a href="#">Về chúng tôi</a>
+            <a href="#">Các loại sản phẩm</a>
+            <a href="#">Blog</a>
+        </div>
+
+        <div class="footer-group">
+            <h2>Hỗ trợ</h2>
+            <a href="#">Liên hệ</a>
+            <a href="#">Câu hỏi thường gặp</a>
+        </div>
+
+        <div class="footer-group">
+            <h2>Nhận Ưu Đãi</h2>
+            <div class="footer-subscribe">
+                <input type="email" placeholder="Đăng ký để nhận ngay ưu đãi!">
+                <button id="subscribe-btn">Đăng ký</button>
+            </div>
+            <div class="footer-social" style="gap: 20px">
+                <a href="#"><img src="assets/images/facebook.png" alt="Facebook"></a>
+                <a href="#"><img src="assets/images/instagram.png" alt="Instagram"></a>
+                <a href="#"><img src="assets/images/tik-tok.png" alt="TikTok"></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        © Cariol 2025. All rights reserved.
+    </div>
+</footer>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        document.getElementById("subscribe-btn").addEventListener("click", function() {
+            let emailInput = document.querySelector(".footer-subscribe input").value.trim();
+            if (emailInput === "") {
+                alert("Vui lòng nhập email trước khi đăng ký!");
+            } else {
+                alert("Cảm ơn bạn đã đăng ký! Hãy kiểm tra email để nhận ưu đãi.");
+            }
+        });
+    });
+</script>

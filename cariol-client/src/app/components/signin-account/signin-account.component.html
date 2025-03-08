@@ -1,0 +1,23 @@
+<div class="flex flex-col md:flex-row mt-10 mb-20 bg-[#f3f3f3] mx-6 md:mx-12 p-6 md:p-10 rounded-lg shadow-md">
+    
+    <!-- Sidebar -->
+    <app-sidebar></app-sidebar>
+
+    <!-- Main Content -->
+    <section class="flex flex-col flex-grow p-6 md:ml-10 w-full md:w-3/4 bg-[#efebe9] border rounded-lg shadow-sm">
+        <h2 class="mb-6 text-2xl font-semibold text-gray-900">Tài khoản đăng nhập</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="p-6 border border-gray-300 rounded-lg shadow-sm text-center bg-gray-50">
+                <p class="font-semibold text-gray-700">Total Orders</p>
+                <h3 class="text-lg font-bold text-gray-900">{{ data.totalOrder }}</h3>
+                <a href="#" class="text-blue-500 hover:underline">View Order</a>
+            </div>
+
+            <div class="p-6 border border-gray-300 rounded-lg shadow-sm text-center bg-gray-50">
+                <p class="font-semibold text-gray-700">Email đăng nhập</p>
+                <p class="text-gray-900">{{ data.email }}</p>
+            </div>
+        </div>
+    </section>
+</div>
