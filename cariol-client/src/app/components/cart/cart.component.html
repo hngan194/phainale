@@ -1,0 +1,38 @@
+<div class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>Giỏ hàng</h2>
+      <span class="close-btn" (click)="closeCart()">&times;</span>
+    </div>
+    <div class="modal-body">
+      <div class="cart-items">
+        <div *ngFor="let item of cartItems" class="cart-item-container">
+          <div class="cart-item">
+            <img [src]="item.image" alt="{{ item.name }}" class="item-img">
+            <div class="item-info">
+              <p class="item-name">{{ item.name }}</p>
+              <p class="item-category">Phân loại: {{ item.category }}</p>
+              <div class="item-details">
+                <div class="item-quantity">
+                  <button class="quantity-btn" (click)="changeQuantity(item, -1)">-</button>
+                  <input type="text" class="quantity" [(ngModel)]="item.quantity" readonly>
+                  <button class="quantity-btn" (click)="changeQuantity(item, 1)">+</button>
+                </div>
+                <p class="item-price">{{ item.price | currency:'VND' }}</p>
+              </div>
+            </div>
+            <button class="remove-btn" (click)="removeItem(item)">Xóa</button>
+          </div>
+          <hr class="total-line">
+        </div>
+      </div>
+      <div class="cart-total">
+        <p><strong>TỔNG:</strong> <span class="price">{{ getTotal() | currency:'VND' }}</span></p>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="detail-btn">CHI TIẾT</button>
+      <button class="checkout-btn">THANH TOÁN</button>
+    </div>
+  </div>
+</div>
