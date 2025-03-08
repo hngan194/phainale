@@ -1,0 +1,276 @@
+<div class="checkout-container">
+  <div class="checkout-header">
+    <div class="progress-steps">
+      <div class="logo">
+        <img src="path-to-cariol-logo.png" alt="CARIOL">
+      </div>
+      <div class="step completed">
+        <div class="step-circle">1</div>
+        <span>Đăng nhập</span>
+      </div>
+      <div class="step-line"></div>
+      <div class="step completed">
+        <div class="step-circle">2</div>
+        <span>Thông tin</span>
+      </div>
+      <div class="step-line"></div>
+      <div class="step active">
+        <div class="step-circle">3</div>
+        <span>Thanh toán</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="checkout-content">
+    <div class="payment-info">
+      <div class="section">
+        <h3 class="section-title">Thông tin vận chuyển</h3>
+        <div class="shipping-option">
+          <label class="radio-container">
+            <input type="checkbox" name="shipping" [(ngModel)]="expressShipping" (change)="updateShippingFee()">
+            <span class="radio-checkmark"></span>
+            <span class="option-text">Vận chuyển trong 1-2 ngày (trừ CN)</span>
+            <span class="option-price">20,000</span>
+          </label>
+        </div>
+      </div>
+
+
+      <div class="section">
+        <h3 class="section-title">Phương thức thanh toán</h3>
+        <div class="payment-option">
+          <label class="radio-container">
+            <input type="radio" name="paymentMethod" [(ngModel)]="paymentMethod" value="COD" checked>
+            <span class="radio-checkmark"></span>
+            <span class="option-text">Thanh toán tiền mặt khi nhận hàng (COD)</span>
+          </label>
+        </div>
+        
+        <div class="payment-option">
+          <label class="radio-container">
+            <input type="radio" name="paymentMethod" [(ngModel)]="paymentMethod" value="BankTransfer">
+            <span class="radio-checkmark"></span>
+            <span class="option-text">Chuyển khoản ngân hàng</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="action-buttons">
+        <button class="back-btn" (click)="goToCart()">Giỏ hàng</button>
+        <button class="complete-btn" (click)="completeOrder()">HOÀN TẤT</button>
+      </div>
+    </div>
+
+    <div class="product-summary">
+      <div class="product-item">
+        <div class="product-image">
+          <img [src]="product.image" alt="{{ product.name }}">
+        </div>
+        <div class="product-details">
+          <div class="product-name">{{ product.name }}</div>
+          <div class="product-color"><strong>Màu sắc:</strong> {{ selectedColor }}</div>
+          <div class="product-quantity"><strong>Số lượng:</strong> {{ quantity }}</div>
+        </div>
+        <div class="product-price">{{ product.price | currency:'VND' }}</div>
+      </div>
+
+      <div class="coupon-section">
+        <div class="coupon-input">
+          <!-- <input type="text" [(ngModel)]="discountCode" name="discountCode" placeholder="Mã code">
+          <button class="btn-apply">Áp dụng</button> -->
+          <!-- <div class="price-row"> -->
+          <span class="btn-apply" >Mã giảm giá</span>
+          <span>{{ discountCode || '—' }}</span>
+          <!-- </div> -->
+        </div>
+      </div>
+
+      <div class="order-totals">
+        <div class="total-row">
+          <span>Tạm tính</span>
+          <span class="price">{{ total | currency:'VND' }}</span>
+        </div>
+        <div class="total-row">
+          <span>Phí vận chuyển</span>
+          <span class="price">{{ shippingFee | currency:'VND' }}</span>
+
+        </div>
+        <div class="total-row grand-total">
+          <span>Tổng tiền</span>
+          <span class="price">{{ totalPayment  | currency:'VND' }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- <div class="container">
+  <div class="logo">
+    <h1>CARIOL</h1>
+    <p>CARRY ALL THE INFO</p>
+  </div>
+  
+  <div class="checkout-header">
+    <div class="progress-steps">
+      <div class="step completed">
+        <div class="step-circle">1</div>
+        <span>Đăng nhập</span>
+      </div>
+      <div class="step-line"></div>
+      <div class="step active">
+        <div class="step-circle">2</div>
+        <span>Thông tin</span>
+      </div>
+      <div class="step-line"></div>
+      <div class="step">
+        <div class="step-circle">3</div>
+        <span>Thanh toán</span>
+      </div>
+    </div>
+  </div>
+  
+  <div class="payment-container">
+    <div class="payment-left">
+      <h3 class="section-title">Thông tin vận chuyển</h3>
+      
+      <div class="shipping-option">
+        <label>
+          <input type="radio" checked name="shipping" [(ngModel)]="expressShipping" (change)="updateShippingFee()"> Vận chuyển trong 1-2 ngày (trữ CN)
+          <span class="shipping-price">20,000</span>
+        </label>
+      </div>
+      
+      <h3 class="section-title">Phương thức thanh toán</h3>
+      
+      <div class="payment-option">
+        <label>
+          <input type="radio" name="paymentMethod" [(ngModel)]="paymentMethod" value="COD" checked> Thanh toán tiền mặt khi nhận hàng (COD)
+        </label>
+      </div>
+      
+      <div class="payment-option">
+        <label>
+          <input type="radio" name="paymentMethod" [(ngModel)]="paymentMethod" value="BankTransfer"> Chuyển khoản ngân hàng
+        </label>
+      </div>
+      
+      <div class="action-buttons">
+        <button class="back-btn" (click)="goToCart()">Giỏ hàng</button>
+        <button class="complete-btn" (click)="completeOrder()">HOÀN TẤT</button>
+      </div>
+    </div>
+    
+    <div class="payment-right">
+      <div class="order-summary">
+        <div class="product-item">
+          <img [src]="product.image" alt="{{ product.name }}">
+          <div class="product-details">
+            <div class="product-name">{{ product.name }}</div>
+            <div class="product-color"><strong>Màu sắc:</strong> {{ selectedColor }}</div>
+          </div>
+          <div class="product-price">{{ product.price | currency:'VND' }}</div>
+        </div>
+        
+        <div class="promo-code">
+          <input type="text" placeholder="Mã code" class="code-input">
+          <button class="apply-btn">Áp dụng</button>
+        </div>
+        
+        <div class="order-totals">
+          <div class="total-row">
+            <span>Tạm tính</span>
+            <span>{{ total | currency:'VND' }}</span>
+          </div>
+          <div class="total-row">
+            <span>Phí vận chuyển</span>
+            <span>{{ shippingFee | currency:'VND' }}</span>
+          </div>
+          <div class="total-row grand-total">
+            <span>Tổng tiền</span>
+            <span>{{ total + shippingFee | currency:'VND' }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- <div class="payment-container">
+  <div class="payment-info">
+    <div class="checkout-header">
+      <span class="completed">Đăng nhập</span>
+      <span class="completed">Thông tin</span>
+      <span class="active">Thanh toán</span>
+    </div>
+
+    <div class="form-section-title">Thông tin vận chuyển</div>
+    <div class="form-group">
+      <p><strong>Họ và tên:</strong> {{ orderInfo.fullName }}</p>
+      <p><strong>Email:</strong> {{ orderInfo.email || 'Không cung cấp' }}</p>
+      <p><strong>Số điện thoại:</strong> {{ orderInfo.phone }}</p>
+      <p><strong>Địa chỉ:</strong> {{ orderInfo.address }}</p>
+    </div>
+
+    <div class="form-group">
+      <label>
+        <input type="checkbox" [(ngModel)]="expressShipping" (change)="updateShippingFee()">
+        Giao hàng trong 1-2 ngày (+20.000 VND)
+      </label>
+    </div>
+
+    <div class="form-section-title">Phương thức thanh toán</div>
+    <div class="form-group">
+      <label>
+        <input type="radio" name="paymentMethod" [(ngModel)]="paymentMethod" value="COD">
+        Thanh toán khi nhận hàng (COD)
+      </label>
+    </div>
+    <div class="form-group">
+      <label>
+        <input type="radio" name="paymentMethod" [(ngModel)]="paymentMethod" value="BankTransfer">
+        Chuyển khoản ngân hàng
+      </label>
+    </div>
+
+    <div class="button-group">
+      <button type="button" class="cart-btn" (click)="goToCart()">Giỏ hàng</button>
+      <button type="button" class="checkout-btn" (click)="completeOrder()">Hoàn tất</button>
+    </div>
+  </div>
+
+  <div class="summary">
+    <div class="product-summary-header">
+      <div class="product-image">
+        <img [src]="product.image" alt="{{ product.name }}">
+      </div>
+      <div class="product-details">
+        <div class="product-name">{{ product.name }}</div>
+        <div class="product-color"><strong>Màu sắc:</strong> {{ selectedColor }}</div>
+        <div class="product-quantity"><strong>Số lượng:</strong> {{ quantity }}</div>
+      </div>
+      <div class="product-price">{{ product.price | currency:'VND' }}</div>
+    </div>
+
+    <div class="price-details">
+      <div class="price-row">
+        <span>Mã giảm giá</span>
+        <span>{{ discountCode || '—' }}</span>
+      </div>
+      <div class="price-row">
+        <span>Tạm tính</span>
+        <span>{{ total | currency:'VND' }}</span>
+      </div>
+      <div class="price-row">
+        <span>Phí vận chuyển</span>
+        <span>{{ shippingFee | currency:'VND' }}</span>
+      </div>
+      <div class="price-row total-price">
+        <span>Tổng tiền</span>
+        <span>{{ total + shippingFee | currency:'VND' }}</span>
+      </div>
+    </div>
+  </div>
+</div> --> -->

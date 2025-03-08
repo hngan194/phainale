@@ -1,0 +1,58 @@
+<div class="banner">
+  <img src="assets/banner.jpg" alt="New Collection" class="banner-image">
+</div>
+
+<div class="container">
+  <div *ngFor="let category of categories" class="category-section">
+    <h2 class="category-title">{{ category.name }}</h2>
+    
+    <div class="product-grid">
+      <div *ngFor="let product of category.products.slice(0, 4)" 
+           class="product-card"
+           [routerLink]="['/product', product.id]">
+        <div class="product-image">
+          <img [src]="product.image" alt="{{ product.name }}">
+          <div class="color-options">
+            <span *ngFor="let color of product.colors" 
+                  class="color-option"
+                  [style.backgroundColor]="color">
+            </span>
+          </div>
+        </div>
+        
+        <h3 class="product-name">{{ product.name }}</h3>
+        <p class="product-price">{{ product.price | currency:'VND':'symbol':'1.0-0' }}</p>
+      </div>
+    </div>
+    
+    <button 
+      (click)="viewCategory(category.name)" 
+      class="view-all-btn">
+      VIEW ALL
+    </button>
+  </div>
+</div>
+
+<!-- <div class="banner">
+    <img src="assets/banner.jpg" alt="New Collection">
+# thêm hình banner vào thư mục assets
+  </div>
+  
+  <div *ngFor="let category of categories">
+    <h2>{{ category.name }}</h2>
+  
+    <div class="product-list">
+      <div *ngFor="let product of category.products.slice(0, 4)" class="product-card">
+        <img [src]="product.image" alt="{{ product.name }}">
+        <h3>{{ product.name }}</h3>
+        <p>{{ product.price | currency }}</p>
+        <div class="color-options">
+          <span *ngFor="let color of product.colors" [style.background]="color"></span>
+        </div>
+        <button (click)="viewProduct(product.id)">View Details</button>
+      </div>
+    </div>
+  
+    <button (click)="viewCategory(category.name)">View All</button>
+  </div>
+   -->
