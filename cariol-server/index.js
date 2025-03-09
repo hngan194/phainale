@@ -15,12 +15,12 @@ app.get("/",(req,res)=>{
 res.send("This Web server is processed for MongoDB") 
 }) 
 const { MongoClient, ObjectId } = require('mongodb'); 
-client = new MongoClient("mongodb+srv://doadmin:W6x9V4S5Lo3872KC@ledoannghilinh-9d081a9b.mongo.ondigitalocean.com/admin?tls=true&authSource=admin"); 
+client = new MongoClient("mongodb+srv://ngannh22411c:RqiRhKKhKcSUhEiX@group7.zpydo.mongodb.net/"); 
 client.connect(); 
 database = client.db("cariol");       
-accountsCollection = database.collection("accounts"); 
-app.get("/accounts",cors(),async (req,res)=>{    
-    const result = await accountsCollection.find({}).toArray(); 
+productsCollection = database.collection("products");
+app.get("/products",cors(),async (req,res)=>{    
+    const result = await productsCollection.find({}).toArray(); 
     res.send(result) 
     } 
-    ) 
+    )
