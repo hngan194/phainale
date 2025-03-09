@@ -129,4 +129,74 @@
     background: rgba(0, 0, 0, 0.5);
     z-index: 999;
   }
-  
+  /* Định dạng cho nút dropdown */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Định dạng cho button */
+.dropdown-btn {
+  background-color: #f8f8f8;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* Định dạng cho dropdown */
+.dropdown {
+  position: relative; /* Để dropdown menu có thể được hiển thị dưới button */
+  display: inline-block; /* Hiển thị dropdown theo kiểu inline-block */
+}
+
+/* Định dạng cho liên kết "SẢN PHẨM" */
+.dropdown a {
+  text-decoration: none;
+  color: #333;
+  padding: 10px 15px;
+  font-size: 16px;
+  cursor: pointer;
+  display: block; /* Hiển thị như block để dễ dàng canh chỉnh */
+}
+
+/* Hiệu ứng hover cho liên kết */
+.dropdown a:hover {
+  background-color: #f1f1f1;
+}
+
+/* Định dạng cho menu dropdown */
+.dropdown-menu {
+  display: none; /* Mặc định ẩn menu */
+  position: absolute; /* Đặt vị trí của menu dưới button */
+  top: 100%; /* Hiển thị menu ngay dưới button */
+  left: 0;
+  min-width: 200px; /* Đặt chiều rộng tối thiểu cho menu */
+  background-color: #fff; /* Màu nền trắng cho menu */
+  border: 1px solid #ddd; /* Đường viền mờ xung quanh menu */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Tạo hiệu ứng bóng đổ cho menu */
+  z-index: 1; /* Đảm bảo menu sẽ ở trên các phần tử khác */
+  list-style-type: none; /* Loại bỏ dấu chấm đầu dòng */
+  padding: 0; /* Bỏ padding mặc định */
+}
+
+/* Hiển thị menu khi di chuột vào dropdown */
+.dropdown:hover .dropdown-menu {
+  display: block; /* Khi hover vào dropdown, menu sẽ hiển thị */
+}
+
+/* Định dạng cho từng mục trong dropdown menu */
+.dropdown-menu li {
+  padding: 8px 15px;
+  cursor: pointer;
+}
+
+/* Thay đổi màu nền khi hover vào mỗi mục trong menu */
+.dropdown-menu li:hover {
+  background-color: #f1f1f1;
+}
+
+/* Định dạng để menu không bị tràn khi có nhiều mục */
+.dropdown-menu li:last-child {
+  border-bottom: none;
+}

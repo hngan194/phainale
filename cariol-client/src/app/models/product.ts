@@ -4,8 +4,10 @@ export class Product{
         public name: string,
         public amount: number,
         public price: number,
-        public image: string,
         public description: string,
-        public categoryId: string
+        public image: string[],
+        public categoryName: string,
+        public color: string,
+        public size: string
     ){}
 }

@@ -1,53 +1,45 @@
 <header class="top-bar">
-    <!-- Bên trái: Số điện thoại & Email -->
     <div class="left">
         <span><i class="fa-solid fa-phone"></i> 0967663867</span>
         <span><i class="fa-solid fa-envelope"></i> info&#64;cariol.com</span>
     </div>
-    
-    <!-- Bên phải: Ô tìm kiếm & icon -->
     <div class="right">
         <div class="search-box">
             <input type="text" placeholder="Tìm kiếm...">
             <button><i class="fa-solid fa-search"></i></button>
         </div>
         <i class="fa-solid fa-user" (click)="openPopup('login')"></i>
-        <i class="fa-solid fa-shopping-cart" (click)="openPopup('cart')"></i>
+        <i class="fa-solid fa-shopping-cart" (click)="toggleCart()"></i>
     </div>
-  </header>
-  
-  
-  <div class="menu">
+</header>
+
+<div class="menu">
     <div class="menu-left">
         <a routerLink="/aboutus">ABOUT US</a>
         <a routerLink="/blog">BLOG</a>
     </div>
-  
-    <!-- Logo ở giữa -->
+
     <div class="logo">
         <img src="/images/cariol-logo.png" alt="CARIOL">
     </div>
-  
+
     <div class="menu-right">
-        <a routerLink="/categories">SẢN PHẨM</a>
+        <!-- Dropdown cho các category -->
+        <div class="dropdown" (mouseover)="showCategories=true" (mouseleave)="showCategories=false">
+            <a routerLink="/products">SẢN PHẨM</a>
+            <ul *ngIf="showCategories" class="dropdown-menu">
+                <li *ngFor="let category of categories" (click)="onCategoryClick(category)">
+                    {{ category.name }}
+                </li>
+            </ul>
+        </div>
         <a routerLink="/faq">FAQ</a>
     </div>
-  </div>
-  
-  
-  
-  
-  <!-- OVERLAY MỜ KHI HIỂN THỊ POPUP -->
-  <div class="overlay" *ngIf="isPopupOpen()" (click)="closePopup()"></div>
-  
-  <!-- Popup Đăng nhập -->
-  <app-login *ngIf="currentPopup === 'login'" (switchPopup)="openPopup($event)" (close)="closePopup()"></app-login>
-  
-  <!-- Popup Đăng ký -->
-  <app-register *ngIf="currentPopup === 'register'" (switchPopup)="openPopup($event)" (close)="closePopup()"></app-register>
-  
-  <!-- Popup Quên mật khẩu -->
-  <app-forgot-password *ngIf="currentPopup === 'forgotpw'" (switchPopup)="openPopup($event)" (close)="closePopup()"></app-forgot-password>
-  
-<!-- Gửi trạng thái mở/đóng giỏ hàng vào component -->
+</div>
+
+<!-- OVERLAY MỜ KHI HIỂN THỊ POPUP -->
+<div class="overlay" *ngIf="isPopupOpen()" (click)="closePopup()"></div>
+<app-login *ngIf="currentPopup === 'login'" (switchPopup)="openPopup($event)" (close)="closePopup()"></app-login>
+<app-register *ngIf="currentPopup === 'register'" (switchPopup)="openPopup($event)" (close)="closePopup()"></app-register>
+<app-forgot-password *ngIf="currentPopup === 'forgotpw'" (switchPopup)="openPopup($event)" (close)="closePopup()"></app-forgot-password>
 <app-cart *ngIf="currentPopup === 'cart'"></app-cart>

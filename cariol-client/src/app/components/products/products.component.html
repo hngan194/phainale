@@ -1,0 +1,16 @@
+<div *ngIf="products.length > 0; else noProducts">
+    <div *ngFor="let product of products" class="product-card">
+      <!-- Kiểm tra nếu image có giá trị hợp lệ -->
+      <img [src]="product.image" 
+           alt="{{ product.name }}" class="product-image" />
+      
+      <h3 class="product-name">{{ product.name }}</h3>
+      <p class="product-price">{{ product.price | currency:'VND':'symbol':'1.0-0' }}</p>
+      <p class="product-description">{{ product.description }}</p>
+    </div>
+  </div>
+  
+  <ng-template #noProducts>
+    <p>Không có sản phẩm nào.</p>
+  </ng-template>
+  
