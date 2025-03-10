@@ -17,6 +17,8 @@ export class RegisterComponent implements OnInit {
 
   registerForm!: FormGroup;
   submitted = false;
+  loading = false;
+  errorMessage = '';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -47,28 +49,57 @@ export class RegisterComponent implements OnInit {
     this.submitted = true;
 
     if (this.registerForm.invalid) {
+      console.log("❌ Form không hợp lệ:", this.registerForm.value);
+      this.errorMessage = "Vui lòng điền đầy đủ thông tin!";
       return;
     }
 
     const registerData = {
-      last_name: this.registerForm.get('last_name')?.value,
-      first_name: this.registerForm.get('first_name')?.value,
-      phone: this.registerForm.get('phone')?.value,
-      email: this.registerForm.get('email')?.value,
-      password: this.registerForm.get('password')?.value
+      last_name: this.registerForm.get('last_name')?.value.trim(),
+      first_name: this.registerForm.get('first_name')?.value.trim(),
+      phone: this.registerForm.get('phone')?.value.trim(),
+      email: this.registerForm.get('email')?.value.trim(),
+      password: this.registerForm.get('password')?.value.trim()
     };
 
-    this.authService.register(registerData)
-      .pipe(first())
-      .subscribe(
-        data => {
-          this.alertService.success('Đăng ký thành công!');
-          this.router.navigate(['/login']);
-        },
-        error => {
-          this.alertService.error('Đăng ký thất bại: ' + error);
+    console.log("🔹 Kiểm tra tài khoản trong database trước khi đăng ký:", registerData);
+
+    // 🔹 Kiểm tra số điện thoại hoặc email đã tồn tại trong database
+    this.authService.checkUserExists(registerData.phone, registerData.email).subscribe({
+      next: (exists) => {
+        if (exists) {
+          console.error("❌ Lỗi: Số điện thoại hoặc email đã tồn tại!");
+          this.errorMessage = "Số điện thoại hoặc email đã được đăng ký!";
+          return;
         }
-      );
+
+        console.log("✅ Tài khoản chưa tồn tại, tiếp tục gửi API đăng ký...");
+
+        this.authService.register(registerData)
+          .pipe(first())
+          .subscribe({
+            next: () => {
+              console.log("✅ Đăng ký thành công!");
+              this.alertService.success("Đăng ký thành công!");
+
+              setTimeout(() => {
+                this.closePopup();
+                this.router.navigate(['/login']);
+              }, 1000);
+            },
+            error: (error) => {
+              console.error("❌ Lỗi từ API:", error);
+              this.errorMessage = "Không thể tạo tài khoản. Vui lòng thử lại!";
+              this.loading = false;
+            }
+          });
+      },
+      error: (error) => {
+        console.error("❌ Lỗi kiểm tra tài khoản từ API:", error);
+        this.errorMessage = "Lỗi kiểm tra tài khoản. Vui lòng thử lại!";
+        this.loading = false;
+      }
+    });
   }
 
   mustMatch(password: string, confirmPassword: string) {
