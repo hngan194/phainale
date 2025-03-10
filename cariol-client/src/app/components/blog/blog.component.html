@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="vi">
 
 <head>
     <meta charset="utf-8" />
@@ -16,9 +16,17 @@
                 <hr>
 
                 <div class="blog2">
+                    <!-- Duyệt qua các blog trong mảng blogs -->
                     <div class="blog-item" *ngFor="let blog of blogs" (click)="someFunction(blog)">
-                        <!-- <img [src]="'assets/' + blog.image" width="160px" /> -->
-                        <p class="blog-text">{{blog.title}}</p>
+                        <!-- Hiển thị ảnh nếu có -->
+                        <div class="blog-item" *ngFor="let blog of blogs" (click)="someFunction(blog)">
+                            <div *ngIf="blog.images && blog.images.length > 0">
+                                <div *ngFor="let image of blog.images">
+                                    <img [src]="image" alt="Blog Image" width="160px" />
+                                </div>
+                            </div>
+                            <p class="blog-text">{{ blog.title }}</p>
+                        </div>                        
                     </div>
                 </div>
             </div>

@@ -1,43 +1,49 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { catchError, map, Observable, retry, tap, throwError } from 'rxjs';
-import { Blog } from '../../app/models/blog';
+import { catchError, map, Observable, retry, throwError } from 'rxjs';
+import { Blog } from '../models/blog'; // Tạo một model Blog tương tự như Product
+
 @Injectable({
   providedIn: 'root'
 })
 export class BlogService {
 
-  private apiUrl: string = 'http://localhost:3000/api';
-  private blog$: Observable<Blog[]>;
+  constructor(private _http: HttpClient) { }
 
-  constructor(private httpClient: HttpClient) {
-    this.blog$ = this.httpClient.get<any>(`${this.apiUrl}/blog`).pipe(
-      map(response => response.data),
-      retry(2),
-      catchError(this.handleError)
-    );
-  }
-  
+  // Hàm lấy tất cả blog
   getBlogs(): Observable<Blog[]> {
-    return this.blog$;
-  }
+    const headers = new HttpHeaders().set("Content-Type", "text/plain;charset=utf8");
+    const requestOptions: Object = {
+      headers: headers,
+      responseType: "text"
+    };
 
-  getBlogDetails(id: string): Observable<Blog> {
-    return this.blog$.pipe(
-      map((products: Blog[]) => {
-        const foundProduct = products.find(product => product._id === id);
-        if (foundProduct) {
-          return foundProduct;
-        } else {
-          throw new Error(`Blog with ID ${id} not found`);
-        }
-      }),
+    // Gửi yêu cầu lấy tất cả các blog
+    return this._http.get<any>("/blogs", requestOptions).pipe(
+      map(res => JSON.parse(res) as Blog[]), // Chuyển đổi dữ liệu về mảng Blog
+      retry(3),
       catchError(this.handleError)
     );
   }
 
-  private handleError(error: HttpErrorResponse) {
+  // Hàm lấy blog theo ID
+  getBlogById(id: any): Observable<Blog> {
+    const headers = new HttpHeaders().set("Content-Type", "text/plain;charset=utf8");
+    const requestOptions: Object = {
+      headers: headers,
+      responseType: "text"
+    };
+
+    // Gửi yêu cầu lấy blog theo ID
+    return this._http.get<any>(`/blogs/${id}`, requestOptions).pipe(
+      map(res => JSON.parse(res) as Blog),
+      retry(3),
+      catchError(this.handleError)
+    );
+  }
+
+  // Hàm xử lý lỗi
+  handleError(error: HttpErrorResponse) {
     return throwError(() => new Error(error.message));
   }
-
 }
