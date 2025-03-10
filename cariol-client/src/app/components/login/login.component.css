@@ -124,3 +124,6 @@
     cursor: pointer;
   }
   
+  .text-danger {
+    color: red;
+  }
