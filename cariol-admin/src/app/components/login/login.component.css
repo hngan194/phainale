@@ -1,0 +1,86 @@
+/* Căn giữa form đăng nhập */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: #F7F5F2;
+}
+
+/* Hộp đăng nhập */
+.login-box {
+    width: 350px;
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Tiêu đề */
+.login-box h2 {
+    margin-bottom: 20px;
+    color: #5C4033;
+}
+
+/* Nhóm input */
+.input-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+/* Label */
+.input-group label {
+    display: block;
+    font-weight: bold;
+    color: #5C4033;
+    margin-bottom: 5px;
+}
+
+/* Ô input */
+.input-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #8B5D33;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+/* Ô input khi focus */
+.input-group input:focus {
+    border-color: #5C4033;
+    outline: none;
+    box-shadow: 0 0 5px rgba(139, 93, 51, 0.5);
+}
+
+/* Nút đăng nhập */
+.login-btn {
+    width: 100%;
+    padding: 10px;
+    background: #5C4033;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* Nút đăng nhập hover */
+.login-btn:hover {
+    background: #8B5D33;
+}
+
+/* Link quên mật khẩu */
+.forgot-password {
+    margin-top: 10px;
+}
+
+.forgot-password a {
+    text-decoration: none;
+    color: #5C4033;
+}
+
+.forgot-password a:hover {
+    text-decoration: underline;
+}

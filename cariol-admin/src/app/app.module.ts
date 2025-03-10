@@ -6,10 +6,18 @@ import { AppComponent } from './app.component';
 import { BlogComponent } from './components/blog/blog.component';  // Đảm bảo import đúng BlogComponent
 import { AppRoutingModule } from './app-routing.module';  // Đảm bảo đã import AppRoutingModule
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { LoginComponent } from './components/login/login.component';
+import { RoleManagementComponent } from './components/role-management/role-management.component';
 @NgModule({
   declarations: [
     AppComponent,
-    BlogComponent,  // Đảm bảo BlogComponent được khai báo
+    BlogComponent,
+    NavbarComponent,
+    SidebarComponent,
+    LoginComponent,
+    RoleManagementComponent,  // Đảm bảo BlogComponent được khai báo
     // Các component khác
   ],
   imports: [

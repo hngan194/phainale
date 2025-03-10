@@ -92,6 +92,16 @@
     margin: 10px auto;
   }
   
+  .name-group {
+    display: flex;
+    gap: 10px; /* Khoảng cách giữa hai ô input */
+  }
+  
+  .name-group .form-group {
+    flex: 1; /* Chia đều 2 ô input trên cùng 1 hàng */
+  }
+  
+
   .register-btn:hover {
     background-color: #5C4033;
   }
