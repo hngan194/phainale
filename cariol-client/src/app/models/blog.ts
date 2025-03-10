@@ -3,7 +3,8 @@ export class Blog{
         public _id: any,
         public title: string,
         public content: string,
-        public author: any,
-        public image: string[] = []
+        public __v: number,
+        public accountId: any,
+        public image: string
     ){}
 }

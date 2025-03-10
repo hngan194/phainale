@@ -25,7 +25,6 @@ import { AuthService } from './services/auth.service';
 import { AlertService } from './services/alert.service';
 import { ProductService } from './services/product.service';
 import { CartService } from './services/cart.service';
-import { BlogDetailComponent } from './components/blog-detail/blog-detail.component';
 
 @NgModule({
   declarations: [
@@ -42,8 +41,7 @@ import { BlogDetailComponent } from './components/blog-detail/blog-detail.compon
     OrderComponent,
     PaymentComponent,
     ProductsComponent,
-    FooterComponent,
-    BlogDetailComponent
+    FooterComponent
   ],
   imports: [
     BrowserModule,

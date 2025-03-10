@@ -66,41 +66,43 @@ export class RegisterComponent implements OnInit {
 
     // 🔹 Kiểm tra số điện thoại hoặc email đã tồn tại trong database
     this.authService.checkUserExists(registerData.phone, registerData.email).subscribe({
-      next: (exists) => {
-        if (exists) {
+      next: (response) => {
+        console.log("🔹 Phản hồi từ API check-user:", response);
+    
+        if (response.exists) {
           console.error("❌ Lỗi: Số điện thoại hoặc email đã tồn tại!");
           this.errorMessage = "Số điện thoại hoặc email đã được đăng ký!";
           return;
         }
-
+    
         console.log("✅ Tài khoản chưa tồn tại, tiếp tục gửi API đăng ký...");
-
         this.authService.register(registerData)
           .pipe(first())
           .subscribe({
             next: () => {
               console.log("✅ Đăng ký thành công!");
               this.alertService.success("Đăng ký thành công!");
-
               setTimeout(() => {
                 this.closePopup();
                 this.router.navigate(['/login']);
               }, 1000);
             },
             error: (error) => {
-              console.error("❌ Lỗi từ API:", error);
+              console.error("❌ Lỗi từ API đăng ký:", error);
               this.errorMessage = "Không thể tạo tài khoản. Vui lòng thử lại!";
-              this.loading = false;
             }
           });
       },
       error: (error) => {
         console.error("❌ Lỗi kiểm tra tài khoản từ API:", error);
-        this.errorMessage = "Lỗi kiểm tra tài khoản. Vui lòng thử lại!";
-        this.loading = false;
+        if (error.status === 400) {
+          this.errorMessage = "Số điện thoại hoặc email đã được đăng ký!";
+        } else {
+          this.errorMessage = "Lỗi kiểm tra tài khoản. Vui lòng thử lại!";
+        }
       }
     });
-  }
+  }    
 
   mustMatch(password: string, confirmPassword: string) {
     return (formGroup: FormGroup) => {
