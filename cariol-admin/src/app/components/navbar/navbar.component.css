@@ -1,0 +1,40 @@
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 15px;
+    padding-left: 5px;
+    background: #F4F1EC; /* Màu be nhạt */
+    height: 30px;
+    border-bottom: 1px solid #ddd;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000; /* Đảm bảo navbar luôn ở trên sidebar */
+}
+
+/* Logo */
+.logo img {
+    padding-top: 7px;
+    height: 50px;
+}
+
+/* Icon user bên phải */
+.user-icon {
+    font-size: 22px;
+    margin-right: 25px;
+}
+
+.user-icon i {
+    font-size: 24px;
+    cursor: pointer;
+    color: #5C4033; /* Màu nâu */
+    z-index: 1001; /* Đảm bảo không bị che */
+    position: relative;
+}
+
+.user-icon i:hover {
+    color: #8B5D33;
+}

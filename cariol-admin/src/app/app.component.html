@@ -1,2 +1,15 @@
-<p>admin works</p>
-<router-outlet></router-outlet> <!-- Điều này sẽ hiển thị BlogComponent khi bạn truy cập vào route '/blogs' -->
+<!-- <app-navbar></app-navbar>
+<app-sidebar></app-sidebar>
+
+<div class="content">
+    <router-outlet></router-outlet>
+</div> -->
+
+<app-navbar></app-navbar>
+<app-sidebar></app-sidebar>
+
+<div class="content">
+    <div class="dashboard">
+        <router-outlet></router-outlet>
+    </div>
+</div>
