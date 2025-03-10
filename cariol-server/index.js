@@ -24,3 +24,9 @@ app.get("/products",cors(),async (req,res)=>{
     res.send(result) 
     } 
     )
+blogsCollection = database.collection("blogs");
+app.get("blogs",cors(),async (req,res)=>{    
+    const result = await blogsCollection.find({}).toArray(); 
+    res.send(result) 
+    } 
+    )

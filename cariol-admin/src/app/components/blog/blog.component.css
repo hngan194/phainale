@@ -1,0 +1,18 @@
+#create-blog-btn {
+    display: block;
+    width: 100%;
+    padding: 12px 20px;
+    background-color: #d8b09c; /* Màu nâu nhạt */
+    color: white;
+    border: none;
+    border-radius: 12px; /* Bo tròn 4 góc */
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    text-align: center;
+  }
+  
+  #create-blog-btn:hover {
+    background-color: #c19a84; /* Màu nâu đậm hơn khi hover */
+  }
+  
