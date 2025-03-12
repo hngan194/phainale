@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { BlogService } from '../../services/blog.service';
+import { HttpClient } from '@angular/common/http';
+
 
 @Component({
   selector: 'app-blog-detail',
@@ -9,23 +10,27 @@ import { BlogService } from '../../services/blog.service';
   styleUrls: ['./blog-detail.component.css']
 })
 export class BlogDetailComponent implements OnInit {
-  blog: any;
+  blogId!: string;  // Thêm dấu "!" để báo với TypeScript rằng biến này sẽ được gán giá trị
 
-  constructor(
-    private _activatedRoute: ActivatedRoute,
-    private _bservice: BlogService
-  ) {}
+
+  blog: any = null;
+
+
+  constructor(private route: ActivatedRoute, private http: HttpClient) {}
+
 
   ngOnInit(): void {
-    const blogId = this._activatedRoute.snapshot.paramMap.get('_id');
-    if (blogId) {
-      this._bservice.getBlogById(blogId).subscribe((data) => {
-        this.blog = data;
-      });
-    }
+    this.blogId = this.route.snapshot.paramMap.get('id') || '';  // Gán giá trị từ URL
+    this.getBlogDetail(this.blogId);
   }
-   // Hàm quay lại trang danh sách blog
-   goBack(): void {
-    window.history.back(); // Quay lại trang trước
+
+
+  getBlogDetail(id: string): void {
+    this.http.get('http://localhost:3002/blogs/' + id)
+      .subscribe(response => {
+        this.blog = response;
+      }, error => {
+        console.error('Error fetching blog details:', error);
+      });
   }
 }

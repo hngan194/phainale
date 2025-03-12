@@ -1,24 +1,19 @@
-<div class="blog-detail">
-    <h1>{{ blog?.title }}</h1>
-    <p class="author">Author: {{ blog?.author }}</p>
-    <p class="date">Published on: {{ blog?.createdAt | date:'dd/MM/yyyy' }}</p>
-  
-    <hr />
-  
-    <div class="content">
-      <p>{{ blog?.content }}</p>
-    </div>
-  
-    <!-- Nếu có hình ảnh thì hiển thị -->
-    <div *ngIf="blog?.images?.length > 0" class="images">
-      <h3>Images:</h3>
-      <div *ngFor="let image of blog?.images">
-        <img [src]="image" alt="Blog Image" width="300" />
-      </div>
-    </div>
-  
-    <div class="back-btn">
-      <button (click)="goBack()">Back to Blogs</button>
-    </div>
+<div class="blog-container" *ngIf="blog">
+  <h1 class="blog-title">{{ blog.title }}</h1>
+  <p class="blog-author"><strong>Author:</strong> {{ blog.author }}</p>
+
+  <div class="blog-content">
+    <h3>Content:</h3>
+    <p>{{ blog.content }}</p>
   </div>
-  
+
+  <!-- Hiển thị ảnh nếu có -->
+  <div class="blog-images" *ngIf="blog.images && blog.images.length">
+    <h3>Images:</h3>
+    <img *ngFor="let image of blog.images" [src]="image" alt="Blog image" />
+  </div>
+</div>
+
+<div *ngIf="!blog">
+  <p>Loading...</p>
+</div>

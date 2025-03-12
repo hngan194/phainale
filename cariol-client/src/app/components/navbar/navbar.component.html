@@ -20,20 +20,26 @@
     </div>
 
     <div class="logo">
-        <img src="/images/cariol-logo.png" alt="CARIOL">
+        <a routerLink="/">
+            <img src="/images/cariol-logo.png" alt="CARIOL">
+        </a>
     </div>
 
     <div class="menu-right">
         <!-- Dropdown cho các category -->
-        <div class="dropdown" (mouseover)="showCategories=true" (mouseleave)="showCategories=false">
+        <div class="dropdown">
             <a routerLink="/products">SẢN PHẨM</a>
-            <ul *ngIf="showCategories" class="dropdown-menu">
-                <li *ngFor="let category of categories" (click)="onCategoryClick(category)">
-                    {{ category.name }}
-                </li>
+            <ul class="dropdown-menu">
+                <li *ngFor="let category of categories" 
+                (click)="onCategoryClick(category)">
+              <!-- Điều hướng đến trang sản phẩm theo category -->
+              <a [routerLink]="'/products'" [queryParams]="{ categoryName: category }">
+                {{ category }}
+              </a>
+            </li>
             </ul>
         </div>
-        <a routerLink="/faq">FAQ</a>
+        <a routerLink="/common-question">FAQ</a>
     </div>
 </div>
 

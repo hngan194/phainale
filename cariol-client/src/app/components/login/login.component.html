@@ -23,7 +23,7 @@
 
           <div *ngIf="submitted && f['password'].errors" class="text-danger">
             <small *ngIf="f['password'].errors['required']">Mật khẩu không được để trống.</small>
-            <small *ngIf="f['password'].errors['minlength']">Mật khẩu tối thiểu 8 ký tự.</small>
+            <small *ngIf="f['password'].errors['minlength']">Mật khẩu tối thiểu 6 ký tự.</small>
           </div>
         </div>
 

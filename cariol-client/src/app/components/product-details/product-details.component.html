@@ -1,52 +1,54 @@
 <div class="product-container" *ngIf="product">
     <!-- Hình ảnh sản phẩm -->
     <div class="image-section">
-        <img [src]="selectedImage" [alt]="product.name" class="main-image">
-        <div class="image-thumbnails">
-            <img *ngFor="let img of product.image || [product.image]" 
-                 [src]="img" 
-                 [alt]="product.name" 
-                 (click)="selectImage(img)">
-        </div>
+      <img [src]="selectedImage" [alt]="product.name" class="main-image">
+      <div class="image-thumbnails">
+        <!-- Nếu image là chuỗi, sử dụng một hình ảnh chính -->
+        <img *ngIf="product.image" 
+             [src]="product.image" 
+             [alt]="product.name" 
+             (click)="selectImage(product.image)">
+      </div>
     </div>
   
     <!-- Thông tin sản phẩm -->
     <div class="info-section">
-        <h2>{{ product.name }}</h2>
-        <p>{{ product.price | currency:'VND':'symbol':'1.0-0' }}</p>
+      <h2>{{ product.name }}</h2>
+      <p>{{ product.price | currency:'VND':'symbol':'1.0-0' }}</p>
   
-        <!-- Màu sắc -->
-        <div class="color-options">
-            <div *ngFor="let color of product.color" 
-                 class="color-circle" 
-                 [style.backgroundColor]="color"
-                 (click)="selectColor(color)">
-            </div>
+      <!-- Màu sắc -->
+      <div class="color-options" *ngIf="product.color">
+        <div class="color-circle" 
+             [style.backgroundColor]="product.color"
+             (click)="selectColor(product.color)">
         </div>
+      </div>
   
-        <!-- Chọn số lượng -->
-        <div class="quantity-selector">
-            <button (click)="decreaseQuantity()">-</button>
-            <input type="number" [(ngModel)]="quantity" min="1">
-            <button (click)="increaseQuantity()">+</button>
-        </div>
+      <!-- Chọn số lượng -->
+      <div class="quantity-selector">
+        <button (click)="decreaseQuantity()">-</button>
+        <input type="number" [(ngModel)]="quantity" min="1">
+        <button (click)="increaseQuantity()">+</button>
+      </div>
   
-        <!-- Nút hành động -->
-        <div class="action-buttons">
-            <button (click)="buyNow()">MUA NGAY</button>
-            <button (click)="addToCart()">THÊM VÀO GIỎ</button>
-        </div>
+      <!-- Nút hành động -->
+      <div class="action-buttons">
+        <button (click)="buyNow()">MUA NGAY</button>
+        <button (click)="addToCart()">THÊM VÀO GIỎ</button>
+      </div>
   
-        <!-- Mô tả & Kích thước -->
-        <div class="toggle-section">
-            <h3 (click)="toggleDescription()">Mô tả sản phẩm</h3>
-            <p *ngIf="showDescription && product.description">{{ product.description }}</p>
-        </div>
+      <!-- Mô tả sản phẩm -->
+      <div class="toggle-section">
+        <h3 (click)="toggleDescription()">Mô tả sản phẩm</h3>
+        <p *ngIf="showDescription && product.description">{{ product.description }}</p>
+      </div>
   
-        <div class="toggle-section">
-            <h3 (click)="toggleSize()">Kích thước sản phẩm</h3>
-            <p *ngIf="showSize && product.size">{{ product.size }}</p>
-        </div>
+      <!-- Loại bỏ Kích thước nếu không có -->
+      <!-- Nếu trường size không còn, không cần phần này -->
+      <!-- <div class="toggle-section" *ngIf="product.size">
+        <h3 (click)="toggleSize()">Kích thước sản phẩm</h3>
+        <p *ngIf="showSize && product.size">{{ product.size }}</p>
+      </div> -->
     </div>
   </div>
   

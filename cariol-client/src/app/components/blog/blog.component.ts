@@ -1,6 +1,8 @@
+
 import { Component, OnInit } from '@angular/core';
-import { BlogService } from '../../services/blog.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { BlogService } from '../../services/blog.service';  // Import BlogService
+import { Router } from '@angular/router';  // Import Router
+
 
 @Component({
   selector: 'app-blog',
@@ -9,30 +11,30 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./blog.component.css']
 })
 export class BlogComponent implements OnInit {
-  blogs: any[] = [];
-  selectedCode: any;
+  blogs: any[] = [];  // Mảng để lưu danh sách các blog
 
-  constructor(
-    private _activatedRoute: ActivatedRoute,
-    private _router: Router,
-    private _bservice: BlogService
-  ) {}
 
-  ngOnInit() {
-    this._bservice.getBlogs().subscribe({
-      next: (data) => { this.blogs = data; },
-      error: (err) => { console.log(err); }
-    });
+  constructor(private blogService: BlogService, private router: Router) { }
 
-    this._activatedRoute.paramMap.subscribe((params) => {
-      let code = params.get("_id");
-      if (code != null) {
-        this.selectedCode = code;
+
+  ngOnInit(): void {
+    // Gọi hàm getBlogs() để lấy danh sách blog
+    this.blogService.getBlogs().subscribe(
+      (data: any[]) => {
+        this.blogs = data;  // Lưu dữ liệu vào mảng blogs
+      },
+      error => {
+        console.error("Có lỗi khi lấy dữ liệu blog:", error);
       }
-    });
+    );
   }
 
-  someFunction(blog: any): void {
-    this._router.navigate(["/blogs", blog._id]);
+
+  // Hàm xử lý khi click vào một bài blog
+  onBlogClick(blogId: string): void {
+    this.router.navigate(['/blog-detail', blogId]);  // Điều hướng đến blog detail với blogId
   }
 }
+
+
+

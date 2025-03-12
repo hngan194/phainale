@@ -82,10 +82,13 @@ export class RegisterComponent implements OnInit {
             next: () => {
               console.log("✅ Đăng ký thành công!");
               this.alertService.success("Đăng ký thành công!");
+              alert('🎉 Đăng ký thành công! Chào mừng bạn.');
+              this.closePopup();
+
+
               setTimeout(() => {
-                this.closePopup();
                 this.router.navigate(['/login']);
-              }, 1000);
+              }, 500);
             },
             error: (error) => {
               console.error("❌ Lỗi từ API đăng ký:", error);

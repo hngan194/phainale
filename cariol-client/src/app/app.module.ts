@@ -19,6 +19,9 @@ import { OrderComponent } from './components/order/order.component';
 import { PaymentComponent } from './components/payment/payment.component';
 import { ProductsComponent } from './components/products/products.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { BlogDetailComponent } from './components/blog-detail/blog-detail.component';
+import { CommonQuestionComponent } from './components/common-question/common-question.component';
+
 
 // Các service
 import { AuthService } from './services/auth.service';
@@ -41,7 +44,9 @@ import { CartService } from './services/cart.service';
     OrderComponent,
     PaymentComponent,
     ProductsComponent,
-    FooterComponent
+    FooterComponent,
+    BlogDetailComponent,
+    CommonQuestionComponent
   ],
   imports: [
     BrowserModule,

@@ -5,9 +5,9 @@ export class Product{
         public amount: number,
         public price: number,
         public description: string,
-        public image: string[],
+        public image: string,
         public categoryName: string,
         public color: string,
-        public size: string
+        public infor: string
     ){}
 }

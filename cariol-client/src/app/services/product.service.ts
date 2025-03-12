@@ -1,62 +1,59 @@
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http'; 
-import { Injectable } from '@angular/core'; 
-import { catchError, map, Observable, retry, throwError } from 'rxjs'; 
-import { Product } from '../models/product'; 
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, of } from 'rxjs';  // Import 'of' từ rxjs
+import { catchError, map, retry } from 'rxjs/operators';
 
-@Injectable({ 
-  providedIn: 'root' 
-}) 
-export class ProductService { 
+interface Product {
+  _id: string;  // ID sản phẩm
+  price: number;  // Giá sản phẩm
+  description: string;  // Mô tả sản phẩm
+  infor: string;  // Thông tin chi tiết sản phẩm
+  amount: number;  // Số lượng sản phẩm
+  categoryName: string;  // Danh mục sản phẩm
+  name: string;  // Tên sản phẩm
+  color: string;  // Màu sắc sản phẩm
+  image: string;  // Hình ảnh sản phẩm (base64)
+}
 
-  constructor(private _http: HttpClient) { }   
+@Injectable({
+  providedIn: 'root'
+})
+export class ProductService {
 
-  // Hàm lấy tất cả sản phẩm
-  getProducts(): Observable<Product[]> { 
-    const headers = new HttpHeaders().set("Content-Type", "text/plain;charset=utf8"); 
-    const requestOptions: Object = { 
-      headers: headers, 
-      responseType: "text" 
-    }; 
-    return this._http.get<any>("/products", requestOptions).pipe( 
-      map(res => JSON.parse(res) as Product[]), 
-      retry(3), 
-      catchError(this.handleError)
-    ); 
-  }
+  constructor(private _http: HttpClient) {}
 
-  // Hàm lấy sản phẩm theo categoryName
+  // Lấy tất cả sản phẩm theo categoryName
   getProductsByCategory(categoryName: string): Observable<Product[]> {
-    const headers = new HttpHeaders().set("Content-Type", "text/plain;charset=utf8"); 
+    const headers = new HttpHeaders().set("Content-Type", "application/json");
     const requestOptions: Object = { 
       headers: headers, 
-      responseType: "text" 
-    }; 
+      responseType: "json" 
+    };
 
-    // Gửi yêu cầu lấy sản phẩm theo categoryName
-    return this._http.get<any>(`/products?categoryName=${categoryName}`, requestOptions).pipe( 
-      map(res => JSON.parse(res) as Product[]), 
-      retry(3), 
+    // Truyền categoryName vào URL để lọc sản phẩm theo category
+    return this._http.get<Product[]>(`/products?categoryName=${categoryName}`, requestOptions).pipe(  
+      retry(3),
       catchError(this.handleError)
     );
   }
- // Hàm lấy sản phẩm theo ID
- getProductById(id: any): Observable<Product> {
-  const headers = new HttpHeaders().set("Content-Type", "text/plain;charset=utf8");
-  const requestOptions: Object = {
-    headers: headers,
-    responseType: "text"
-  };
 
-  // Gửi yêu cầu lấy sản phẩm theo ID
-  return this._http.get<any>(`/products/${id}`, requestOptions).pipe(
-    map(res => JSON.parse(res) as Product),
-    retry(3),
-    catchError(this.handleError)
-  );
-}
-// Hàm lấy danh mục với các sản phẩm
+  // Lấy tất cả sản phẩm mà không theo category
+  getAllProducts(): Observable<Product[]> {
+    const headers = new HttpHeaders().set("Content-Type", "application/json");
+    const requestOptions: Object = { 
+      headers: headers, 
+      responseType: "json" 
+    };
+
+    return this._http.get<Product[]>('/products', requestOptions).pipe(  // Lấy tất cả sản phẩm từ API
+      retry(3),
+      catchError(this.handleError)  // Sử dụng handleError để xử lý lỗi
+    );
+  }
+  // Hàm lấy danh mục với các sản phẩm
+
 getCategoriesWithProducts(): any[] {
-  const products = this.getProducts();  // Lấy tất cả sản phẩm từ API
+  const products = this.getAllProducts();  // Lấy tất cả sản phẩm từ API
   const categoriesWithProducts: any[] = [];  // Mảng chứa danh mục và các sản phẩm của nó
 
   // Tạo danh sách danh mục
@@ -71,8 +68,42 @@ getCategoriesWithProducts(): any[] {
 
   return categoriesWithProducts;
 }
-  // Xử lý lỗi
-  handleError(error: HttpErrorResponse) { 
-    return throwError(() => new Error(error.message)); 
+
+  // Lấy sản phẩm theo ID
+  getProductById(id: string): Observable<Product> {
+    const headers = new HttpHeaders().set("Content-Type", "application/json");
+    const requestOptions: Object = { 
+      headers: headers, 
+      responseType: "json" 
+    };
+
+    return this._http.get<Product>(`/products/${id}`, requestOptions).pipe(  // Lấy sản phẩm theo ID từ API
+      retry(3),
+      catchError(this.handleError)  // Sử dụng handleError để xử lý lỗi
+    );
+  }
+
+  // Lấy tất cả các categoryName duy nhất từ các sản phẩm
+  getCategories(): Observable<string[]> {
+    const headers = new HttpHeaders().set("Content-Type", "application/json");
+    const requestOptions: Object = { 
+      headers: headers, 
+      responseType: "json" 
+    };
+
+    return this._http.get<Product[]>('/products', requestOptions).pipe(  // Lấy tất cả sản phẩm từ API
+      map(products => {
+        // Trả về danh sách các categoryName duy nhất
+        return Array.from(new Set(products.map(product => product.categoryName)));
+      }),
+      retry(3),
+      catchError(this.handleError)  // Sử dụng handleError để xử lý lỗi
+    );
+  }
+
+  // Xử lý lỗi và trả về một Observable với giá trị mặc định là một mảng trống
+  private handleError(error: any): Observable<any> {
+    console.error(error);
+    return of([]);  // Trả về một Observable với giá trị là mảng trống
   }
 }

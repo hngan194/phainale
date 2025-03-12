@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ProductService } from '../../services/product.service';
 import { PopupService } from '../../services/popup.service';
-import { ProductService } from '../../services/product.service';  // Thêm import ProductService
 
 @Component({
   selector: 'app-navbar',
@@ -8,19 +8,22 @@ import { ProductService } from '../../services/product.service';  // Thêm impor
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnInit {
+  categories: string[] = [];  // Mảng chứa tên các category
+  showCategories: boolean = false;  // Biến điều khiển hiển thị dropdown
+  
 
-  // Các biến và thuộc tính mới cho category dropdown
-  showCategories: boolean = false;
-  categories = [
-    { name: 'Balo' },
-    { name: 'Ví' },
-    { name: 'Túi Tote' },
-    { name: 'Phụ kiện' }
-  ];
+  ngOnInit(): void {
+    // Lấy danh sách các category khi khởi tạo component
+    this.productService.getCategories().subscribe(categories => {
+      this.categories = categories;
+    });
+  }
 
-  selectedCategory: string | null = null;  // Thêm thuộc tính để theo dõi category người dùng chọn
-
+  onCategoryClick(categoryName: string): void {
+    // Xử lý khi người dùng click vào category, ví dụ: điều hướng đến trang sản phẩm
+    console.log('Category clicked:', categoryName);
+  }
   constructor(
     public popupService: PopupService,
     private productService: ProductService  // Thêm constructor cho ProductService
@@ -50,34 +53,5 @@ export class NavbarComponent {
       console.log('🔹 Mở giỏ hàng');
       this.openPopup('cart');
     }
-  }
-
-  // Hàm xử lý khi click vào một category
-  onCategoryClick(category: any) {
-    this.selectedCategory = category.name;  // Cập nhật category người dùng chọn
-    this.getProductsForCategory();
-  }
-
-  // Hàm lấy sản phẩm theo category hoặc tất cả sản phẩm
-  getProductsForCategory() {
-    if (this.selectedCategory) {
-      // Nếu có category, gọi API để lấy sản phẩm theo category
-      this.productService.getProductsByCategory(this.selectedCategory).subscribe(products => {
-        console.log('Sản phẩm theo category:', products);
-        // Xử lý hiển thị sản phẩm theo category
-      });
-    } else {
-      // Nếu không có category (tức là bấm vào "Sản phẩm"), gọi API để lấy tất cả sản phẩm
-      this.productService.getProducts().subscribe(products => {
-        console.log('Tất cả sản phẩm:', products);
-        // Xử lý hiển thị tất cả sản phẩm
-      });
-    }
-  }
-
-  // Hàm để reset khi bấm vào "Sản phẩm"
-  onAllProductsClick() {
-    this.selectedCategory = null;  // Reset category
-    this.getProductsForCategory();  // Lấy tất cả sản phẩm
   }
 }

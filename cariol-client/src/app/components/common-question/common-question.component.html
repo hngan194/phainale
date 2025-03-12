@@ -1,9 +1,4 @@
-<html>
-
-<head>
-    <title>Common Question</title>
-    <link rel="stylesheet" href="common-question.component.css">
-</head>
+<!-- 
 
 <body>
   <div class="faq-container">
@@ -80,7 +75,19 @@
     </div>
   </div>
   
-      
-</body>
+       -->
 
-</html>
+
+       <div class="faq-container">
+        <h2>Các câu hỏi thường gặp</h2>
+      
+        <div 
+          *ngFor="let faq of faqs; let i = index" 
+          class="faq-item" 
+          [class.open]="faq.open"
+          (click)="toggleFaq(i)">
+          <h3>{{ faq.question }}</h3>
+          <p class="faq-answer" *ngIf="faq.open">{{ faq.answer }}</p>
+        </div>
+      </div>
+      
