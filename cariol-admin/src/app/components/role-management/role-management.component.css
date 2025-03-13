@@ -1,5 +1,5 @@
 .container {
-    width: 80%;
+    width: 90%;
     margin: 30px auto;
     padding: 20px;
     background: white;
@@ -101,4 +101,55 @@ select {
 .confirm-buttons button:last-child {
     background: red;
     color: white;
+}
+
+.edit-btn {
+    background: #5bc0de;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+.popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    z-index: 1000;
+    width: 300px;
+}
+
+.popup input, .popup select {
+    width: 100%;
+    padding: 8px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.popup-actions {
+    margin-top: 10px;
+    text-align: right;
+}
+
+.popup-actions button {
+    background: #8b5d33;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+.popup-actions button:last-child {
+    background: red;
 }

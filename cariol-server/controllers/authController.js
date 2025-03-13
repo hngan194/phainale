@@ -105,7 +105,10 @@ exports.checkUserExists = async (req, res) => {
 
     if (user) {
       console.log("✅ Tài khoản đã tồn tại:", user.phone);
-      return res.status(200).json({ exists: true, message: "Tài khoản đã tồn tại!" });
+      return res.status(200).json({ exists: true, message: "Tài khoản đã tồn tại!",
+      userId: user._id  // Trả về userId để sử dụng khi cập nhật role
+      });
+      
     }
 
     console.log("❌ Tài khoản chưa tồn tại.");
@@ -118,24 +121,9 @@ exports.checkUserExists = async (req, res) => {
 };
 
 
-// 🟢 Cập nhật Role (dành cho Admin)
-exports.updateRole = async (req, res) => {
-  try {
-    const { userId, newRole } = req.body;
-
-    if (!["client", "admin"].includes(newRole)) {
-      return res.status(400).json({ message: "Vai trò không hợp lệ" });
-    }
-
-    await User.findByIdAndUpdate(userId, { role: newRole });
-
-    res.json({ message: `Cập nhật vai trò thành ${newRole} thành công!` });
-  } catch (error) {
-    res.status(500).json({ message: "Lỗi server" });
-  }
-};
 
 
+// Quên mật khẩu
 exports.forgotPassword = async (req, res) => {
   try {
     const { identifier } = req.body; // Lấy email hoặc số điện thoại từ request
@@ -158,7 +146,7 @@ exports.forgotPassword = async (req, res) => {
 
     console.log("✅ Tài khoản hợp lệ:", user.email || user.phone);
     
-    // 🟢 (Tuỳ chọn) Giả lập gửi email đặt lại mật khẩu
+
     return res.json({ message: "Hướng dẫn đặt lại mật khẩu đã được gửi qua email hoặc SMS." });
 
   } catch (error) {
@@ -166,3 +154,150 @@ exports.forgotPassword = async (req, res) => {
     res.status(500).json({ message: "Lỗi server", error: error.message });
   }
 };
+
+// login admin
+// exports.loginAdmin = async (req, res) => {
+//   try {
+//     const { email, password } = req.body;
+
+//     if (!email || !password) {
+//       return res.status(400).json({ message: "Vui lòng nhập email và mật khẩu!" });
+//     }
+
+//     // ✅ Tìm user theo email
+//     const user = await User.findOne({ email });
+//     if (!user) {
+//       return res.status(404).json({ message: "Tài khoản không tồn tại!" });
+//     }
+
+//     // ✅ Kiểm tra role (chỉ Admin hoặc Staff mới được vào)
+//     if (user.role !== "admin" && user.role !== "staff") {
+//       return res.status(403).json({ message: "Bạn không có quyền truy cập vào hệ thống quản trị!" });
+//     }
+
+//     // ✅ Kiểm tra mật khẩu
+//     const isMatch = await bcrypt.compare(password, user.password);
+//     if (!isMatch) {
+//       return res.status(401).json({ message: "Email hoặc mật khẩu không đúng!" });
+//     }
+
+//     // ✅ Tạo token JWT
+//     const token = jwt.sign({ id: user._id, role: user.role }, process.env.SECRET_KEY, { expiresIn: "24h" });
+
+//     res.json({ message: "Đăng nhập thành công!", token, role: user.role });
+
+//   } catch (error) {
+//     res.status(500).json({ message: "Lỗi server", error: error.message });
+//   }
+// };
+// loginAdmin
+exports.loginAdmin = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      return res.status(400).json({ message: "Vui lòng nhập email và mật khẩu!" });
+    }
+
+    // Tìm user theo email
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ message: "Tài khoản không tồn tại!" });
+    }
+
+    // Kiểm tra role (chỉ Admin hoặc Staff mới được vào)
+    if (user.role !== "admin" && user.role !== "staff") {
+      return res.status(403).json({ message: "Bạn không có quyền truy cập vào hệ thống quản trị!" });
+    }
+
+    // Kiểm tra mật khẩu
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(401).json({ message: "Email hoặc mật khẩu không đúng!" });
+    }
+
+    // Tạo token JWT
+    const token = jwt.sign({ id: user._id, role: user.role }, process.env.SECRET_KEY, { expiresIn: "24h" });
+
+    // Trả về thông tin người dùng, bao gồm last_name và email
+    res.json({
+      message: "Đăng nhập thành công!",
+      token,
+      role: user.role,
+      email: user.email,    // Trả về email
+      last_name: user.last_name  // Trả về last_name
+    });
+
+  } catch (error) {
+    res.status(500).json({ message: "Lỗi server", error: error.message });
+  }
+};
+
+
+
+// 🟢 Lấy danh sách user có role là admin hoặc staff
+exports.getUserList = async (req, res) => {
+  try {
+    const users = await User.find(
+      { role: { $in: ["admin", "staff"] } }, // Chỉ lấy user có role admin hoặc staff
+      "last_name email role" // Chỉ trả về các trường cần thiết
+    );
+    res.json({ users });
+  } catch (error) {
+    console.error("❌ Lỗi lấy danh sách user:", error);
+    res.status(500).json({ message: "Lỗi server!" });
+  }
+};
+
+
+
+// 🟢 Xác minh mật khẩu admin trước khi cập nhật role
+exports.verifyAdminPassword = async (req, res) => {
+  try {
+    const { password } = req.body;
+
+    // Mật khẩu cố định
+    const FIXED_PASSWORD = "admin123";  // Mật khẩu cố định (có thể thay đổi theo yêu cầu)
+
+    // Kiểm tra mật khẩu nhập vào với mật khẩu cố định
+    if (password === FIXED_PASSWORD) {
+      return res.json({ message: "Xác thực thành công!" });
+    }
+
+    // Nếu mật khẩu không khớp, trả về lỗi
+    return res.status(401).json({ message: "Mật khẩu không chính xác!" });
+
+  } catch (error) {
+    res.status(500).json({ message: "Lỗi server!" });
+  }
+};
+
+
+// 🟢 Cập nhật role người dùng
+exports.updateRole = async (req, res) => {
+  try {
+    const { email, newRole } = req.body;
+
+    // Kiểm tra xem email và role mới có được gửi đầy đủ hay không
+    if (!email || !newRole) {
+      return res.status(400).json({ message: "Email và role không hợp lệ!" });
+    }
+
+    // Tìm user theo email
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ message: "Không tìm thấy người dùng với email này!" });
+    }
+
+    // Cập nhật role cho user
+    user.role = newRole;
+    await user.save();  // Lưu thay đổi vào database
+
+    console.log(`Cập nhật vai trò thành công: ${user.email} - ${user.role}`);
+    res.json({ message: `Cập nhật vai trò của ${user.email} thành ${newRole} thành công!` });
+  } catch (error) {
+    console.error("Lỗi khi cập nhật vai trò:", error);
+    res.status(500).json({ message: "Lỗi server khi cập nhật role!" });
+  }
+};
+
