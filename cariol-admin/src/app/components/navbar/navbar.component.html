@@ -1,12 +1,19 @@
 <nav class="navbar">
     <!-- Logo bên trái -->
     <div class="logo">
-        <img src="/images/cariol-logo.png" alt="CARIOL">
+      <img src="/images/cariol-logo.png" alt="CARIOL" onclick="window.location.href='/dashboard'">
     </div>
-
-    <!-- Icon user bên phải -->
-    <div class="user-icon">
-        <i class="fa-solid fa-user" routerLink="/login"></i>
+  
+    <!-- Icon user bên phải khi chưa đăng nhập -->
+    <div *ngIf="!isLoggedIn" class="user-icon" (click)="goToLogin()">  <!-- Gọi hàm goToLogin khi click vào icon -->
+      <i class="fa-solid fa-user"></i>
+    </div>
+    
+    <!-- Hiển thị tên người dùng và icon đăng xuất khi đã đăng nhập -->
+    <div *ngIf="isLoggedIn" class="user-info">
+      <span class="greeting">Chào, {{ lastName  }}</span>
+      <i class="fa-solid fa-right-from-bracket" (click)="logout()"></i>
     </div>
 </nav>
+  
 

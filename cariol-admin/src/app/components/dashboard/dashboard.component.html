@@ -1,0 +1,66 @@
+<!-- dashboard.component.html -->
+<div class="dashboard-container">
+  <h1>Chào mừng đến với hệ thống quản lý Cariol!</h1>
+
+  <div class="card-container">
+    <!-- Card 2: Quản lý Vai Trò -->
+    <div class="card">
+      <div class="card-header">
+        <i class="fas fa-user-cog"></i>
+        <h2>Quản lý Vai Trò</h2>
+      </div>
+      <div class="card-body">
+        <p>Quản lý các vai trò người dùng trong hệ thống.</p>
+        <button routerLink="/role-management">Cập nhật</button>
+      </div>
+    </div>
+
+    <!-- Card 3: Quản lý Sản Phẩm -->
+    <div class="card">
+      <div class="card-header">
+        <i class="fas fa-box"></i>
+        <h2>Quản lý Sản Phẩm</h2>
+      </div>
+      <div class="card-body">
+        <p>Thêm, sửa, xóa sản phẩm trong cửa hàng.</p>
+        <button routerLink="/admin/manage-products">Quản lý sản phẩm</button>
+      </div>
+    </div>
+
+    <!-- Card 4: Quản lý Đơn Hàng -->
+    <div class="card">
+      <div class="card-header">
+        <i class="fas fa-shopping-cart"></i>
+        <h2>Quản lý Đơn Hàng</h2>
+      </div>
+      <div class="card-body">
+        <p>Theo dõi các đơn hàng, tình trạng giao hàng.</p>
+        <button routerLink="/admin/manage-orders">Xem đơn hàng</button>
+      </div>
+    </div>
+
+    <!-- Card 5: Mã Giảm Giá -->
+    <div class="card">
+      <div class="card-header">
+        <i class="fas fa-percent"></i>
+        <h2>Mã Giảm Giá</h2>
+      </div>
+      <div class="card-body">
+        <p>Tạo mã giảm giá cho khách hàng.</p>
+        <button routerLink="/admin/discount-codes">Mã giảm giá</button>
+      </div>
+    </div>
+
+    <!-- Card 6: Quản lý Blog -->
+    <div class="card">
+      <div class="card-header">
+        <i class="fas fa-blog"></i>
+        <h2>Quản lý Blog</h2>
+      </div>
+      <div class="card-body">
+        <p>Thêm, sửa, xóa bài viết blog.</p>
+        <button routerLink="/blog">Quản lý blog</button>
+      </div>
+    </div>
+  </div>
+</div>
