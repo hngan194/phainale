@@ -1,24 +1,26 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quản lý Blog</title>
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
+<!-- src/app/components/blog/blog.component.html -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<div>
+  <h1>Quản lý bài đăng</h1>
+  <button (click)="router.navigate(['/blog-add'])">+ Bài đăng mới</button>
 
-  <div class="container">
-    <h1>Quản lý Blog</h1>
-
-    <div id="blog-list" class="blog-list">
-      <!-- Các bài viết sẽ được hiển thị ở đây -->
-    </div>
-
-    <button id="create-blog-btn" class="btn">Tạo Blog Mới</button>
-  </div>
-
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="app.js"></script>
-</body>
-</html>
+  <table>
+    <thead>
+      <tr>
+        <th>Tiêu đề</th>
+        <th>Tác giả</th>
+        <th>Thao tác</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let blog of blogs">
+        <td>{{ blog.title }}</td>
+        <td>{{ blog.author }}</td>
+        <td>
+          <button (click)="editBlog(blog._id)"><i class="fa-solid fa-pen"></i></button>
+          <button (click)="deleteBlog(blog._id)"><i class="fa-solid fa-trash"></i></button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -10,6 +10,10 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { LoginComponent } from './components/login/login.component';
 import { RoleManagementComponent } from './components/role-management/role-management.component';
+import {AngularEditorModule} from '@kolkov/angular-editor';
+import { BlogAddComponent } from './components/blogadd/blogadd.component';
+import { QuillModule } from 'ngx-quill';
+import { BlogEditComponent } from './components/blogedit/blogedit.component';  // Import QuillModule
 @NgModule({
   declarations: [
     AppComponent,
@@ -17,7 +21,9 @@ import { RoleManagementComponent } from './components/role-management/role-manag
     NavbarComponent,
     SidebarComponent,
     LoginComponent,
-    RoleManagementComponent,  // Đảm bảo BlogComponent được khai báo
+    RoleManagementComponent,
+    BlogAddComponent,
+    BlogEditComponent,  // Đảm bảo BlogComponent được khai báo
     // Các component khác
   ],
   imports: [
@@ -25,6 +31,8 @@ import { RoleManagementComponent } from './components/role-management/role-manag
     FormsModule,  // Đảm bảo FormsModule được import
     AppRoutingModule,  // Đảm bảo AppRoutingModule đã được import
     RouterModule,  // Đảm bảo RouterModule đã được import
+    AngularEditorModule,
+    QuillModule.forRoot()
   ],
   providers: [
     provideHttpClient(withInterceptorsFromDi()), // New way

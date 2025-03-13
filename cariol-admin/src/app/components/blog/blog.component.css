@@ -1,18 +1,173 @@
-#create-blog-btn {
-    display: block;
-    width: 100%;
-    padding: 12px 20px;
-    background-color: #d8b09c; /* Màu nâu nhạt */
-    color: white;
-    border: none;
-    border-radius: 12px; /* Bo tròn 4 góc */
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s;
-    text-align: center;
-  }
-  
-  #create-blog-btn:hover {
-    background-color: #c19a84; /* Màu nâu đậm hơn khi hover */
-  }
-  
+/* Định dạng chung cho trang */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  text-align: center;
+  font-size: 24px;
+  color: #6a4c39;
+  margin-top: 20px;
+}
+
+/* Định dạng cho bảng */
+table {
+  width: 80%;
+  margin: 20px auto;
+  border-collapse: collapse;
+  background-color: #fff;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  background-color: #6a4c39;
+  border-radius: 20px;
+}
+
+/* Định dạng cho các tiêu đề cột */
+th {
+  background-color: #6a4c39;
+  color: white;
+  padding: 10px;
+  text-align: left;
+  font-weight: normal;
+  text-align: center; /* Căn giữa các tiêu đề cột */
+  border-radius: 15px;
+}
+
+/* Định dạng cho các ô dữ liệu trong bảng */
+td {
+  background-color: #fff;
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  color: #6a4c39;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+td img {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+/* Định dạng cho các nút hành động (Sửa, Xóa) */
+button {
+  background-color: #6a4c39;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  margin: 0 5px;
+  cursor: pointer;
+  border-radius: 20px;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #8b6b45;
+}
+
+/* Định dạng cho nút "Bài đăng mới" */
+button.new-post {
+  background-color: #8b6b45;
+  font-size: 16px;
+  font-weight: bold;
+  margin: 20px auto;
+  display: block;
+  width: 200px;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+  color: white;
+}
+
+button.new-post:hover {
+  background-color: #6a4c39;
+}
+
+/* Định dạng cho ô checkbox và cột "Chọn tất cả" */
+th input[type="checkbox"] {
+  margin-left: 10px;
+}
+
+td input[type="checkbox"] {
+  margin-left: 10px;
+}
+
+/* Định dạng form tạo bài đăng mới */
+form {
+  width: 60%;
+  margin: 20px auto;
+  background-color: #fff;
+  padding: 20px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+form input,
+form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+form button {
+  width: 100%;
+  padding: 10px;
+  background-color: #6a4c39;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+form button:hover {
+  background-color: #8b6b45;
+}
+
+/* Cải thiện giao diện hình ảnh */
+img {
+  border-radius: 5px;
+}
+
+/* Giới hạn độ dài của tiêu đề và tác giả */
+td {
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.modal-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px; /* Tạo khoảng cách giữa các nút */
+}
+
+.modal-actions button {
+  width: 30px; /* Điều chỉnh kích thước */
+  height: 30px;
+  border-radius: 50%; /* Biến nút thành hình tròn */
+  border: none; /* Loại bỏ viền */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f0f0f0; /* Màu nền */
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+
+.modal-actions button:hover {
+  background-color: #ddd; /* Màu khi hover */
+}
+
+.modal-actions button i {
+  font-size: 16px; /* Điều chỉnh kích thước icon */
+  color: #333;
+}

@@ -1,0 +1,77 @@
+<html>
+<head>
+    <meta charset='utf-8'>
+    <title>Tiều đề trang</title>
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.quilljs.com/1.3.6/quill.core.css">
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js"></script>
+</head>
+<body>
+    
+</body>
+</html>
+<!-- blogedit.component.html -->
+<form (ngSubmit)="onSubmit()" #blogForm="ngForm" class="create-post-form">
+    <h2>Chỉnh sửa bài đăng</h2>
+  
+    <div class="form-group">
+      <label for="title">Tiêu đề</label>
+      <input 
+        type="text" 
+        id="title" 
+        class="form-control" 
+        name="title" 
+        [(ngModel)]="newBlog.title" 
+        placeholder="Nhập tiêu đề bài viết"
+        required>
+    </div>
+    
+    <div class="form-group">
+      <label for="author">Tác giả</label>
+      <input 
+        type="text" 
+        id="author" 
+        class="form-control" 
+        name="author" 
+        [(ngModel)]="newBlog.author" 
+        placeholder="Nhập tên tác giả"
+        required>
+    </div>
+  
+    <div class="form-group">
+      <label for="content">Nội dung</label>
+      <quill-editor 
+        [(ngModel)]="newBlog.content" 
+        name="content"
+        [modules]="editorConfig"
+        [required]="true">
+      </quill-editor>
+    </div>
+  
+    <div class="form-group file-upload">
+        <label for="imageUrls">Nhập URL hình ảnh</label>
+        <input 
+          type="text" 
+          id="imageUrls" 
+          class="form-control" 
+          name="imageUrls" 
+          [(ngModel)]="newBlog.imageUrls" 
+          placeholder="Nhập URL của hình ảnh" 
+          required>
+    </div>
+    
+    
+      <!-- Hiển thị danh sách các hình ảnh đã nhập -->
+      <div *ngIf="newBlog.images.length">
+        <label>Hình ảnh đã nhập:</label>
+        <ul>
+          <li *ngFor="let image of newBlog.images; let i = index">
+            <img *ngIf="typeof image === 'string'" [src]="image" alt="Image" width="100">
+            <button type="button" class="btn btn-danger" (click)="removeImage(i)">Xóa</button>
+          </li>
+        </ul>
+      </div>
+    <button type="submit" class="btn btn-primary" [disabled]="!blogForm.form.valid">Cập nhật bài đăng</button>
+  </form>
+  
