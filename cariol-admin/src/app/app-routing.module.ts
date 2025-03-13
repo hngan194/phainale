@@ -8,9 +8,9 @@ import { BlogEditComponent } from './components/blogedit/blogedit.component';
 const routes: Routes = [
   { path: 'role-management', component: RoleManagementComponent },
   {path: 'login', component: LoginComponent},
-  { path: 'blog', component: BlogComponent },  // Route cho BlogComponent
-  { path: 'blog-add', component:BlogAddComponent  }, 
-  { path: 'blog-edit/:id', component:BlogEditComponent },
+  { path: 'blog', component: BlogComponent},  // Route cho BlogComponent
+  { path: 'blog-add', component:BlogAddComponent}, 
+  { path: 'blog-edit/:id', component: BlogEditComponent },
   // { path: '', redirectTo: '/blogs', pathMatch: 'full' },  // Route mặc định để hiển thị BlogComponent ngay khi vào ứng dụng
 ];
 

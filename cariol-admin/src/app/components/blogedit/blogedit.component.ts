@@ -1,18 +1,27 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BlogService } from '../../services/blog/blog.service';  // Import BlogService
+import { BlogService } from '../../services/blog/blog.service';
+
 @Component({
   selector: 'app-blogedit',
   standalone: false,
   templateUrl: './blogedit.component.html',
-  styleUrl: './blogedit.component.css'
+  styleUrls: ['./blogedit.component.css']
 })
 export class BlogEditComponent implements OnInit {
-  newBlog: any = { title: '', author: '', content: '', images: [] };  // Dữ liệu blog
+  blogId: string | null = '';
+  newBlog = {
+    title: '',
+    author: '',
+    content: '',
+    image: '',
+    images: [] as string[] // Mảng chứa các ảnh của blog
+  };
+  successMessage: string = '';
 
   constructor(
+    private activatedRoute: ActivatedRoute,
     private blogService: BlogService,
-    private route: ActivatedRoute,
     private router: Router
   ) {}
   editorConfig = {
@@ -30,54 +39,72 @@ export class BlogEditComponent implements OnInit {
       ['clean']                                         // Xóa định dạng
     ]
   };
+
   ngOnInit(): void {
-    const blogId = this.route.snapshot.paramMap.get('id'); // Lấy ID từ URL
-
-    if (blogId) {
-      this.blogService.getBlogById(blogId).subscribe((blog: any) => {
-        this.newBlog = blog;  // Điền dữ liệu blog vào form
-      });
-    }
-  }
-
-  // Phương thức xử lý khi người dùng nhập URL hình ảnh
-  onUrlChange(url: string): void {
-    if (url && !this.newBlog.images.includes(url)) {
-      this.newBlog.images.push(url);  // Thêm URL vào mảng images
-    }
-  }
-
-  // Phương thức xóa URL hình ảnh
-  removeImage(imageIndex: number): void {
-    this.newBlog.images.splice(imageIndex, 1);  // Xóa hình ảnh tại vị trí chỉ định trong mảng
-  }
-
-  // Phương thức gửi dữ liệu chỉnh sửa bài blog
-  onSubmit(): void {
-    const blogId = this.route.snapshot.paramMap.get('id');
-    const formData = new FormData();
-
-    // Thêm các dữ liệu bài blog vào FormData
-    formData.append('title', this.newBlog.title);
-    formData.append('author', this.newBlog.author);
-    formData.append('content', this.newBlog.content);
-
-    // Chỉ thêm URL vào FormData
-    this.newBlog.images.forEach((image: string) => {
-      formData.append('images', image);  // Thêm URL vào FormData
-    });
-
-    if (blogId) {
-      this.blogService.updateBlog(blogId, formData).subscribe(
+    // Lấy id từ URL (ví dụ: /edit-blog/:id)
+    this.blogId = this.activatedRoute.snapshot.paramMap.get('id');
+    
+    // Nếu có id, gọi API để lấy blog
+    if (this.blogId) {
+      this.blogService.getBlogById(this.blogId).subscribe(
         (response) => {
-          console.log('Blog updated successfully:', response);
-          this.router.navigate(['/blog']);
+          this.newBlog = response; // Truyền dữ liệu blog vào form
         },
         (error) => {
-          console.error('There was an error!', error);
-          alert('Error updating blog');
+          console.error('Error fetching blog:', error);
         }
       );
     }
   }
+
+onSubmit() {
+  if (this.blogId) {
+    // Điều hướng ra ngoài trước
+    this.router.navigate(['/blogs']);
+
+    // Xóa blog cũ
+    this.blogService.deleteBlog(this.blogId).subscribe(
+      (response) => {
+        console.log('Blog deleted:', response);
+
+        // Sau khi xóa thành công, thêm blog mới
+        this.blogService.addBlog(this.newBlog).subscribe(
+          (newBlogResponse) => {
+            console.log('New blog added:', newBlogResponse);
+            
+            // Hiển thị thông báo thành công
+            this.successMessage = 'Cập nhật blog thành công!';
+
+            // Điều hướng về trang blog list sau khi thêm blog mới
+            setTimeout(() => {
+              this.router.navigate(['/blog']);
+            }, 2000); // Điều hướng lại sau 2 giây để người dùng thấy thông báo
+          },
+          (error) => {
+            console.error('Error adding new blog:', error);
+          }
+        );
+      },
+      (error) => {
+        console.error('Error deleting blog:', error);
+      }
+    );
+  }
+}
+
+  
+    // Phương thức xóa ảnh
+    deleteImage(image: string): void {
+      this.newBlog.images = this.newBlog.images.filter(img => img !== image); // Xóa ảnh khỏi mảng
+    }
+    onFileChange(event: any): void {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          this.newBlog.image = reader.result as string; // Lưu ảnh dưới dạng base64
+        };
+        reader.readAsDataURL(file);
+      }
+    }
 }

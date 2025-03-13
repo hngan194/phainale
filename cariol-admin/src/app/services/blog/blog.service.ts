@@ -32,16 +32,11 @@ export class BlogService {
     return this.http.post<any>(this.apiUrl, blog);
   }
 
-  updateBlog(blogId: string, blogData: FormData): Observable<any> {
-    return this.http.put(`${this.apiUrl}/${blogId}`, blogData);
-    // console.log(`Updating blog with ID: ${blogId}`);  // Log ID để kiểm tra
-  
-    // // Cấu hình headers nếu cần thiết (thông thường không cần thiết với FormData)
-    // const headers = new HttpHeaders();  
-  
-    // // Gửi yêu cầu PUT đến backend
-    // return this.http.put<any>(`${this.apiUrl}/${blogId}`, blogData, { headers });
+  updateBlog(id: string, blogData: any): Observable<any> {
+    const apiUrl = 'http://localhost:3002'; // Đảm bảo API URL là chính xác
+    return this.http.put<any>(`${apiUrl}/blogs/${id}`, blogData);
   }
+  
 
 
   // Xóa một blog theo id

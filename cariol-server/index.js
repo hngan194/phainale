@@ -6,8 +6,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const mongoose = require('mongoose');
 const { ObjectId } = mongoose.Types;  // Import ObjectId từ mongoose
-
-
+const router = express.Router();
 // Cấu hình middleware
 app.use(morgan("combined"));
 app.use(bodyParser.json());
@@ -39,10 +38,56 @@ mongoose.connect(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true })
       title: String,
       content: String,
       author: String,
+      images: [String]
     });
     const Blog = mongoose.model("Blog", blogSchema);
+    // Đảm bảo bạn có một route DELETE để xóa bài blog
+    app.delete('/blogs/:id', (req, res) => {
+      const blogId = req.params.id;
 
+      Blog.findByIdAndDelete(blogId)
+        .then((deletedBlog) => {
+          if (!deletedBlog) {
+            return res.status(404).json({ error: 'Blog not found' });
+          }
+          res.status(200).json({ message: 'Blog deleted successfully' });
+        })
+        .catch((err) => {
+          res.status(500).json({ error: 'Error deleting blog' });
+        });
+    });
+    app.post('/blogs', (req, res) => {
+      const { title, author, content, images } = req.body;
+    
+      const newBlog = new Blog({
+        title,
+        author,
+        content,
+        images
+      });
+    
+      newBlog.save()
+        .then(blog => res.status(201).json(blog))
+        .catch(err => {
+          console.error('Error saving blog:', err);  // Log lỗi để xác định nguyên nhân
+          res.status(500).json({ error: 'Error saving blog' });
+        });
+    });
+    const multer = require('multer');
+const path = require('path');
 
+// Cấu hình nơi lưu trữ file
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'uploads/');  // Thư mục nơi các tệp hình ảnh sẽ được lưu
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + '-' + file.originalname);  // Đặt tên cho tệp
+  }
+});
+
+// Khởi tạo Multer với các tùy chọn
+const upload = multer({ storage: storage });
     // API để lấy danh sách sản phẩm
     app.get('/products', (req, res) => {
       const categoryName = req.query.categoryName;  // Lấy categoryName từ query params
@@ -68,9 +113,6 @@ mongoose.connect(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true })
           });
       }
     });
-    
-
-
     // API để lấy danh sách blog
     app.get("/blogs", async (req, res) => {
       try {
@@ -80,7 +122,7 @@ mongoose.connect(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true })
         res.status(500).send("Error retrieving blogs");
       }
     });
-
+    // Đảm bảo rằng bạn đang truyền một ObjectId hợp lệ khi thực hiện PUT request
 
     // API để lấy chi tiết blog theo ID
     app.get("/blogs/:id", async (req, res) => {
@@ -105,8 +147,6 @@ mongoose.connect(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true })
         res.status(500).send("Error retrieving blog");
       }
     });
-
-
     // Khởi động server sau khi kết nối thành công
     app.listen(port, () => {
       console.log(`Server running on port ${port}`);

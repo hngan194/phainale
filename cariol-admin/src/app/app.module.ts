@@ -13,7 +13,7 @@ import { RoleManagementComponent } from './components/role-management/role-manag
 import {AngularEditorModule} from '@kolkov/angular-editor';
 import { BlogAddComponent } from './components/blogadd/blogadd.component';
 import { QuillModule } from 'ngx-quill';
-import { BlogEditComponent } from './components/blogedit/blogedit.component';  // Import QuillModule
+import { BlogEditComponent } from './components/blogedit/blogedit.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,7 +23,7 @@ import { BlogEditComponent } from './components/blogedit/blogedit.component';  /
     LoginComponent,
     RoleManagementComponent,
     BlogAddComponent,
-    BlogEditComponent,  // Đảm bảo BlogComponent được khai báo
+    BlogEditComponent,
     // Các component khác
   ],
   imports: [

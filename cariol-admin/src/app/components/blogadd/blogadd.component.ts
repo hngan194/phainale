@@ -28,11 +28,23 @@ export class BlogAddComponent {
       ['clean']                                         // Xóa định dạng
     ]
   };
+  onFileChange(event: any): void {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.newBlog.images = reader.result as string; // Lưu ảnh dưới dạng base64
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
   
     onSubmit() {
       this.blogService.addBlog(this.newBlog).subscribe({
         next: (response) => {
           console.log('Blog saved successfully:', response);
+          this.router.navigate(['/blogs']);
         },
         error: (error) => {
           console.error('There was an error!', error);
