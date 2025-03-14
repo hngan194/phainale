@@ -44,7 +44,7 @@ export class BlogAddComponent {
       this.blogService.addBlog(this.newBlog).subscribe({
         next: (response) => {
           console.log('Blog saved successfully:', response);
-          this.router.navigate(['/blogs']);
+          this.router.navigate(['/blog']);
         },
         error: (error) => {
           console.error('There was an error!', error);
