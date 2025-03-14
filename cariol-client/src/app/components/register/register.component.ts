@@ -59,7 +59,10 @@ export class RegisterComponent implements OnInit {
       first_name: this.registerForm.get('first_name')?.value.trim(),
       phone: this.registerForm.get('phone')?.value.trim(),
       email: this.registerForm.get('email')?.value.trim(),
-      password: this.registerForm.get('password')?.value.trim()
+      password: this.registerForm.get('password')?.value.trim(),
+      address: "",
+      city: "",
+      province: ""
     };
 
     console.log("🔹 Kiểm tra tài khoản trong database trước khi đăng ký:", registerData);
@@ -72,6 +75,7 @@ export class RegisterComponent implements OnInit {
         if (response.exists) {
           console.error("❌ Lỗi: Số điện thoại hoặc email đã tồn tại!");
           this.errorMessage = "Số điện thoại hoặc email đã được đăng ký!";
+          alert("Số điện thoại hoặc email đã được đăng ký!"); 
           return;
         }
     

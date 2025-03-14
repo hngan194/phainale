@@ -1,5 +1,5 @@
 const express = require("express");
-const { register, login, checkUserExists, updateRole, forgotPassword, loginAdmin, getUserList, verifyAdminPassword  } = require("../controllers/authController");
+const { register, login, checkUserExists, updateRole, forgotPassword, loginAdmin, getUserList, verifyAdminPassword, updateProfile, changePassword } = require("../controllers/authController");
 // const { verifyAdminPassword } = require("../controllers/authController");
 const router = express.Router();
 
@@ -11,5 +11,8 @@ router.post("/forgot-password", forgotPassword);  // Đảm bảo đã import t�
 router.get("/users/list", getUserList);
 router.post("/users/verify-admin", verifyAdminPassword);
 router.put("/update-role", updateRole);
+router.put("/update-profile", updateProfile);
+router.put("/change-password", changePassword);
+
 
 module.exports = router;
