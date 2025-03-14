@@ -1,51 +1,75 @@
 <header class="top-bar">
     <div class="left">
-        <span><i class="fa-solid fa-phone"></i> 0967663867</span>
-        <span><i class="fa-solid fa-envelope"></i> info&#64;cariol.com</span>
+      <span><i class="fa-solid fa-phone"></i> 0967663867</span>
+      <span><i class="fa-solid fa-envelope"></i> info&#64;cariol.com</span>
     </div>
     <div class="right">
-        <div class="search-box">
-            <input type="text" placeholder="Tìm kiếm...">
-            <button><i class="fa-solid fa-search"></i></button>
-        </div>
-        <i class="fa-solid fa-user" (click)="openPopup('login')"></i>
-        <i class="fa-solid fa-shopping-cart" (click)="toggleCart()"></i>
-    </div>
-</header>
-
-<div class="menu">
-    <div class="menu-left">
-        <a routerLink="/aboutus">ABOUT US</a>
-        <a routerLink="/blog">BLOG</a>
-    </div>
-
-    <div class="logo">
-        <a routerLink="/">
-            <img src="/images/cariol-logo.png" alt="CARIOL">
-        </a>
-    </div>
-
-    <div class="menu-right">
-        <!-- Dropdown cho các category -->
-        <div class="dropdown">
-            <a routerLink="/products">SẢN PHẨM</a>
-            <ul class="dropdown-menu">
-                <li *ngFor="let category of categories" 
-                (click)="onCategoryClick(category)">
-              <!-- Điều hướng đến trang sản phẩm theo category -->
-              <a [routerLink]="'/products'" [queryParams]="{ categoryName: category }">
-                {{ category }}
-              </a>
-            </li>
+      <div class="search-box">
+        <input type="text" placeholder="Tìm kiếm...">
+        <button><i class="fa-solid fa-search"></i></button>
+      </div>
+      <!-- Trước khi đăng nhập -->
+      <i *ngIf="!isLoggedIn" class="fa-solid fa-user" (click)="openPopup('login')"></i>
+  
+      <!-- Sau khi đăng nhập -->
+      <div *ngIf="isLoggedIn" class="user-menu" (mouseenter)="toggleMenu()" (mouseleave)="toggleMenu()">
+        <i class="fa-solid fa-user-check"></i>
+        <span class="welcome-text">Chào, {{ username }}!</span>
+        <div *ngIf="menuVisible" class="dropdown-user">
+            <ul>
+                <li (click)="goToProfile()">Trang cá nhân</li>
+                <li (click)="goToChangePassword()">Đổi mật khẩu</li>
+                <li (click)="logout()">Đăng xuất</li>
             </ul>
         </div>
-        <a routerLink="/common-question">FAQ</a>
     </div>
-</div>
+      <i class="fa-solid fa-shopping-cart" (click)="toggleCart()"></i>
+    </div>
+  </header>
+  
+  <div class="menu">
+    <div class="menu-left">
+      <a routerLink="/aboutus">ABOUT US</a>
+      <a routerLink="/blog">BLOG</a>
+    </div>
+  
+    <div class="logo">
+      <a routerLink="/">
+        <img src="/images/cariol-logo.png" alt="CARIOL">
+      </a>
+    </div>
+  
+    <div class="menu-right">
+      <div class="dropdown">
+        <a routerLink="/products">PRODUCTS</a>
+        <ul class="dropdown-menu">
+          <li *ngFor="let category of categories" (click)="onCategoryClick(category)">
+            <a [routerLink]="'/products'" [queryParams]="{ categoryName: category }">
+              {{ category }}
+            </a>
+          </li>
+        </ul>
+      </div>
+      <!-- <a routerLink="/common-question">FAQ</a> -->
+
+      <div class="dropdown"> <!-- ✅ Đặt FAQ trong một div để đồng bộ -->
+        <a routerLink="/common-question">FAQ</a>
+      </div>
+    </div>
+  </div>
+  
 
 <!-- OVERLAY MỜ KHI HIỂN THỊ POPUP -->
 <div class="overlay" *ngIf="isPopupOpen()" (click)="closePopup()"></div>
-<app-login *ngIf="currentPopup === 'login'" (switchPopup)="openPopup($event)" (close)="closePopup()"></app-login>
+
+<app-login *ngIf="currentPopup === 'login'" 
+(switchPopup)="openPopup($event)" 
+(close)="closePopup()" 
+(loginSuccess)="onLoginSuccess()"></app-login>
+
 <app-register *ngIf="currentPopup === 'register'" (switchPopup)="openPopup($event)" (close)="closePopup()"></app-register>
+
 <app-forgot-password *ngIf="currentPopup === 'forgotpw'" (switchPopup)="openPopup($event)" (close)="closePopup()"></app-forgot-password>
 <app-cart *ngIf="currentPopup === 'cart'"></app-cart>
+
+

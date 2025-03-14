@@ -2,6 +2,7 @@ import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -12,17 +13,19 @@ import { HttpClient } from '@angular/common/http';
 export class LoginComponent implements OnInit {
   @Output() close = new EventEmitter<void>();
   @Output() switchPopup = new EventEmitter<string>();
+  @Output() loginSuccess = new EventEmitter<void>(); // Emit event after login success
 
   loginForm!: FormGroup;
   submitted = false;
   loading = false;
   errorMessage = '';
-  apiUrl = 'http://localhost:3002/auth'; // ✅ URL API Backend
+  apiUrl = 'http://localhost:3002/auth';
 
   constructor(
     private formBuilder: FormBuilder,
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
@@ -39,63 +42,56 @@ export class LoginComponent implements OnInit {
     this.errorMessage = '';
 
     if (this.loginForm.invalid) {
-      return;
+        return;
     }
 
     this.loading = true;
 
     const loginData = {
-      phone: this.loginForm.value.phone.trim(),
-      password: this.loginForm.value.password.trim()
+        phone: this.loginForm.value.phone.trim(),
+        password: this.loginForm.value.password.trim()
     };
 
-    console.log("🔍 Kiểm tra tài khoản trước khi đăng nhập:", loginData.phone);
+    this.http.post(`${this.apiUrl}/login`, loginData).subscribe({
+        next: (response: any) => {
+            console.log("🔍 API trả về:", response); // ✅ Kiểm tra API trả về gì
 
-    // 🟢 Kiểm tra xem tài khoản có tồn tại không trước khi gửi API login
-    this.http.post(`${this.apiUrl}/check-user`, { phone: loginData.phone }).subscribe({
-      next: (response: any) => {
-        console.log("🔍 Phản hồi từ API check-user:", response);
+            if (!response || !response.last_name) {
+                this.errorMessage = "Dữ liệu đăng nhập không hợp lệ!";
+                return;
+            }
+            
+            console.log("✅ Đăng nhập thành công, lưu user vào localStorage:", response);
 
-        if (!response.exists) {
-          console.error("❌ Tài khoản không tồn tại!");
-          this.errorMessage = "Tài khoản chưa được đăng ký!";
-          this.loading = false;
-          return;
-        }
+            // ✅ Lưu dữ liệu đầy đủ vào localStorage
+            const userData = {
+              first_name: response.first_name || '',
+              last_name: response.last_name || '',
+              phone: response.phone || '',
+              email: response.email || '',
+              address: response.address || '',
+              city: response.city || '',
+              province: response.province || ''
+            };
 
-        console.log("✅ Tài khoản tồn tại, tiếp tục đăng nhập...");
+            localStorage.setItem('user', JSON.stringify(userData)); // ✅ Lưu user đúng cách
+            const token = response.token;
+            localStorage.setItem('token', token); 
+            alert(`🎉 Đăng nhập thành công! Chào mừng ${response.last_name}`);
 
-        // 🟢 Nếu tài khoản tồn tại, tiếp tục gửi API login
-        this.http.post(`${this.apiUrl}/login`, loginData).subscribe({
-          next: (response: any) => {
-            console.log("✅ Đăng nhập thành công! API trả về:", response);
-            localStorage.setItem('token', response.token);
-            localStorage.setItem('role', response.role);
-            alert('🎉 Đăng nhập thành công! Chào mừng bạn.');
-            // ✅ Tự động đóng popup trước khi chuyển hướng
+
+            this.loginSuccess.emit();
             this.closePopup();
-
-            // ✅ Dùng setTimeout để tránh lỗi UI khi đóng popup và chuyển trang
-            setTimeout(() => {
-              this.router.navigate(['/dashboard']);
-            }, 500);
-
-          },
-          error: (error) => {
+        },
+        error: (error) => {
             console.error("❌ Lỗi đăng nhập:", error);
             this.errorMessage = "Số điện thoại hoặc mật khẩu không đúng!";
             this.loading = false;
-          }
-        });
-
-      },
-      error: (error) => {
-        console.error("❌ Lỗi kiểm tra tài khoản từ API:", error);
-        this.errorMessage = "Lỗi kiểm tra tài khoản. Vui lòng thử lại!";
-        this.loading = false;
-      }
+        }
     });
-  }
+}
+
+
 
   switchTo(type: string) {
     this.switchPopup.emit(type);

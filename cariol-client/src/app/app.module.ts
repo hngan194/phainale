@@ -28,6 +28,8 @@ import { AuthService } from './services/auth.service';
 import { AlertService } from './services/alert.service';
 import { ProductService } from './services/product.service';
 import { CartService } from './services/cart.service';
+import { EditProfileComponent } from './components/edit-profile/edit-profile.component';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +48,9 @@ import { CartService } from './services/cart.service';
     ProductsComponent,
     FooterComponent,
     BlogDetailComponent,
-    CommonQuestionComponent
+    CommonQuestionComponent,
+    EditProfileComponent,
+    ChangePasswordComponent
   ],
   imports: [
     BrowserModule,
