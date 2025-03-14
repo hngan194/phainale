@@ -3,13 +3,11 @@
   <p class="blog-author"><strong>Author:</strong> {{ blog.author }}</p>
 
   <div class="blog-content">
-    <h3>Content:</h3>
-    <p>{{ blog.content }}</p>
+    <div [innerHTML]="blog.content"></div>
   </div>
 
   <!-- Hiển thị ảnh nếu có -->
   <div class="blog-images" *ngIf="blog.images && blog.images.length">
-    <h3>Images:</h3>
     <img *ngFor="let image of blog.images" [src]="image" alt="Blog image" />
   </div>
 </div>

@@ -25,6 +25,8 @@
   .blog-content {
     font-size: 18px;
     line-height: 1.6;
+    word-wrap: break-word; /* Cho phép chữ xuống dòng khi gặp phải không gian hẹp */
+    white-space: normal; 
     color: #333;
     text-align: justify;
   }

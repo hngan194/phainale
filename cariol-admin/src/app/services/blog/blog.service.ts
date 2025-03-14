@@ -33,10 +33,9 @@ export class BlogService {
   }
 
   updateBlog(id: string, blogData: any): Observable<any> {
-    const apiUrl = 'http://localhost:3002'; // Đảm bảo API URL là chính xác
+    const apiUrl = 'http://localhost:3002';  // URL backend
     return this.http.put<any>(`${apiUrl}/blogs/${id}`, blogData);
-  }
-  
+  }  
 
 
   // Xóa một blog theo id
