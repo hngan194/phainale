@@ -30,7 +30,7 @@
     </table>
   
     <div class="cart-summary">
-      <h3>Tổng tiền <span>{{ getTotal() }}</span></h3>
+      <h3>Tổng tiền <span>{{ getTotal() | number }}</span></h3>
       <button class="checkout-btn" (click)="buyNow()">THANH TOÁN</button>
     </div>
   
