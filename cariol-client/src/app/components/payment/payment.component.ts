@@ -42,7 +42,7 @@ export class PaymentComponent {
   shippingFee: number = 0;
   total: number = 0;
   totalPayment: number = 0;
-  expressShipping: boolean = false;
+  expressShipping: boolean = true;
   paymentMethod: string = 'COD';
   orderInfo: any = {};
   orderPopupVisible: boolean = false;
@@ -75,7 +75,9 @@ export class PaymentComponent {
       }
     }
   }
-
+  ngOnInit(): void {
+    this.updateShippingFee();  // Gọi hàm khi component được khởi tạo
+  }
   formatAddress(orderInfo: any): string {
     let addressParts = [
       orderInfo.address,
