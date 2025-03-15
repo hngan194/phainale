@@ -2,35 +2,49 @@
     <div class="footer-container">
         <div class="footer-group">
             <h2>Cariol</h2>
-            <p><img src="assets/images/location.png" alt=""> 669 Đỗ Mười, KP 6, P. Linh Xuân, TP. Thủ Đức, TP.HCM.</p>
-            <p><img src="assets/images/phone-call.png" alt=""> 0967663867</p>
-            <p><img src="assets/images/mail.png" alt=""> info&#64;cariol.com</p>
+            <p>
+                <i class="fa-solid fa-location-dot" style="color: #5f3e22;"></i>
+                669 Đỗ Mười, KP 6, P. Linh Xuân, TP. Thủ Đức, TP.HCM.</p>
+            <p>
+                <i class="fa-solid fa-phone" style="color: #5f3e22;"></i> 
+                0967663867
+            </p>
+            <p>
+                <i class="fa-solid fa-envelope" style="color: #5f3e22;"></i>
+                info&#64;cariol.com
+            </p>
         </div>
 
         <div class="footer-group">
             <h2>Thông tin</h2>
             <a href="#">Trang chủ</a>
-            <a href="#">Về chúng tôi</a>
+            <a href="/aboutus">Về chúng tôi</a>
             <a href="#">Các loại sản phẩm</a>
-            <a href="#">Blog</a>
+            <a href="/blog">Blog</a>
         </div>
 
         <div class="footer-group">
             <h2>Hỗ trợ</h2>
             <a href="#">Liên hệ</a>
-            <a href="#">Câu hỏi thường gặp</a>
+            <a href="common-question">Câu hỏi thường gặp</a>
         </div>
 
         <div class="footer-group">
             <h2>Nhận Ưu Đãi</h2>
             <div class="footer-subscribe">
-                <input type="email" placeholder="Đăng ký để nhận ngay ưu đãi!">
-                <button id="subscribe-btn">Đăng ký</button>
+                <input type="email" [(ngModel)]="email" placeholder="Đăng ký để nhận ngay ưu đãi!">
+                <button id="subscribe-btn" (click)="subscribe()">Đăng ký</button>
             </div>
             <div class="footer-social" style="gap: 20px">
-                <a href="#"><img src="assets/images/facebook.png" alt="Facebook"></a>
-                <a href="#"><img src="assets/images/instagram.png" alt="Instagram"></a>
-                <a href="#"><img src="assets/images/tik-tok.png" alt="TikTok"></a>
+                <a href="#">
+                    <i class="fa-brands fa-facebook fa-xl" style="color: #5f3e22;"></i>
+                </a>
+                <a href="#">
+                    <i class="fa-brands fa-instagram fa-xl" style="color: #5f3e22;"></i>
+                </a>
+                <a href="#">
+                    <i class="fa-brands fa-tiktok fa-xl" style="color: #5f3e22;"></i>                
+                </a>
             </div>
         </div>
     </div>
@@ -38,17 +52,9 @@
     <div class="footer-bottom">
         © Cariol 2025. All rights reserved.
     </div>
-</footer>
 
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        document.getElementById("subscribe-btn").addEventListener("click", function() {
-            let emailInput = document.querySelector(".footer-subscribe input").value.trim();
-            if (emailInput === "") {
-                alert("Vui lòng nhập email trước khi đăng ký!");
-            } else {
-                alert("Cảm ơn bạn đã đăng ký! Hãy kiểm tra email để nhận ưu đãi.");
-            }
-        });
-    });
-</script>
+    <!-- Thông báo sẽ xuất hiện ở đây -->
+    <div class="popup-message" [ngClass]="{'show': showMessage, 'success': messageType === 'success', 'error': messageType === 'error'}">
+        {{ message }}
+    </div>
+</footer>

@@ -1,50 +1,111 @@
+/* --- Tổng thể trang --- */
 .page {
-    width: 100%;
-    padding: 20px;
-  }
- 
-  .page2 {
-    max-width: 900px;
-    margin: 0 auto;
-  }
- 
-  .blog {
-    font-family: Arial, sans-serif;
-  }
- 
-  .blog-title {
-    font-size: 2em;
-    color: #333;
-    text-align: center;
-  }
- 
-  .blog2 {
-    margin-top: 20px;
-  }
- 
+  width: 100%; /* Chiếm toàn bộ chiều rộng của màn hình */
+  max-width: 1080px; /* Giới hạn chiều rộng tối đa là 1080px */
+  padding: 40px;
+  background: linear-gradient(to right, #efebe9, #9f8e85);
+  margin: 0 auto; /* Đảm bảo căn giữa trang */
+}
+
+.page2 {
+  max-width: 1080px;
+  margin: 0 auto; /* Đảm bảo căn giữa phần này */
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* --- Tiêu đề và mô tả --- */
+.blog-title {
+  font-size: 2.5em;
+  color: #5f3e22;
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.blog-description {
+  font-size: 1.2em;
+  color: #675654;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.divider {
+  width: 80px;
+  height: 4px;
+  background: #da323e;
+  margin: 0 auto 20px auto;
+  border-radius: 2px;
+}
+
+/* --- Danh sách bài viết --- */
+.blog-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* --- Từng bài viết --- */
+.blog-item {
+  display: flex;
+  background-color: #ededed;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.blog-item:hover {
+  transform: scale(1.02);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* --- Hình ảnh bài viết --- */
+.blog-thumbnail {
+  flex: 0 0 30%;
+  overflow: hidden;
+}
+
+.blog-thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease-in-out;
+}
+
+.blog-item:hover .blog-thumbnail img {
+  transform: scale(1.1);
+}
+
+/* --- Nội dung bài viết --- */
+.blog-info {
+  flex: 1;
+  padding: 20px;
+}
+
+.blog-text {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #5f3e22;
+  margin-bottom: 10px;
+}
+
+.blog-excerpt {
+  font-size: 1em;
+  color: #675654;
+  line-height: 1.6;
+}
+
+/* --- Responsive cho mobile --- */
+@media (max-width: 768px) {
   .blog-item {
-    display: flex; /* Sử dụng flexbox để hình ảnh và tiêu đề nằm ngang */
-    align-items: center; /* Căn giữa theo chiều dọc */
-    margin-bottom: 20px;
-    cursor: pointer;
+      flex-direction: column;
   }
- 
-  .blog-item:hover {
-    background-color: #f0f0f0;
+
+  .blog-thumbnail {
+      flex: 0 0 auto;
   }
- 
-  .blog-image {
-    width: 160px;  /* Kích thước hình ảnh */
-    height: auto;
-    margin-right: 20px;  /* Khoảng cách giữa hình ảnh và tiêu đề */
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
- 
-  .blog-text {
-    font-size: 1.2em;
-    color: #2c3e50;
-    font-weight: bold;
-    margin: 0;
-  }
- 
+}

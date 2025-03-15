@@ -1,20 +1,21 @@
 <div class="page">
-    <div class="page2">
+  <div class="page2">
       <div class="blog">
-        <p class="blog-title">Các bài viết</p>
-        <hr>
- 
-        <div class="blog2">
-          <!-- Duyệt qua các blog trong mảng blogs -->
-          <div class="blog-item" *ngFor="let blog of blogs" (click)="onBlogClick(blog._id)">
-            <!-- Hiển thị ảnh đầu tiên nếu có -->
-            <div *ngIf="blog.images && blog.images.length > 0">
-              <img [src]="blog.images[0]" alt="Blog Image" class="blog-image" />
-            </div>
-           
-            <p class="blog-text">{{ blog.title }}</p>
+          <h1 class="blog-title">Khám phá bài viết</h1>
+          <hr class="divider">
+
+          <div class="blog-list">
+              <!-- Lặp qua danh sách blog -->
+              <div class="blog-item" *ngFor="let blog of blogs" (click)="onBlogClick(blog._id)">
+
+                  <div class="blog-info">
+                      <h3 class="blog-text">{{ blog.title }}</h3>
+                      <p class="blog-excerpt">
+                          {{ blog.description || "Khám phá thêm về bài viết thú vị này." }}
+                      </p>
+                  </div>
+              </div>
           </div>
-        </div>
       </div>
-    </div>
   </div>
+</div>

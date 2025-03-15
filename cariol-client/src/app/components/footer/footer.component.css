@@ -7,7 +7,7 @@ html, body {
 
 .footer {
     background-color: #efebe9;
-    border-top: 1px solid #bbbbbb;
+    border-top: 1px solid #9f8e85;
     width: 100%;
     padding: 40px 20px;
     display: flex;
@@ -35,6 +35,7 @@ html, body {
     font-size: 20px;
     font-weight: bold;
     margin-bottom: 15px;
+    color: #5f3e22;
 }
 
 /* Dòng liên hệ (icon + text) */
@@ -45,7 +46,7 @@ html, body {
     align-items: center;
     gap: 10px;
     margin-bottom: 10px;
-    color: #333;
+    color: #5f3e22;
     text-decoration: none;
 }
 
@@ -56,7 +57,7 @@ html, body {
 
 /* Hiệu ứng hover cho link */
 .footer-group a:hover {
-    color: #e58888;
+    color: #da323e;
 }
 
 /* Footer dưới cùng */
@@ -64,9 +65,9 @@ html, body {
     text-align: center;
     padding: 20px 0;
     font-size: 14pt;
-    color: #777;
+    color: #9f8e85;
     margin-top: 20px;
-    border-top: 1px solid #bbb;
+    border-top: 1px solid #9f8e85;
     width: 100%;
 }
 
@@ -84,7 +85,7 @@ html, body {
 .footer-social {
     display: flex;
     gap: 15px;
-    padding-top: 15px;
+    padding-top: 25px;
     padding-left: 10px;
 }
 
@@ -108,12 +109,15 @@ html, body {
 
 .footer-subscribe input {
     padding: 10px 12px;
-    border: 1px solid gray;
+    border: 1px solid #9f8e85;
     border-radius: 5px;
     outline: none;
     font-size: 14px;
     width: 250px;
-    height: 40px; 
+    height: 40px;
+    min-width: 250px;
+    max-width: 250px;
+    box-sizing: border-box;
 }
 
 .footer-subscribe button {
@@ -124,11 +128,41 @@ html, body {
     border-radius: 5px;
     cursor: pointer;
     font-size: 14px;
-    height: 40px; 
+    height: 40px;
     width: 90px;
+    min-width: 90px;
+    max-width: 90px;
     transition: background 0.3s;
 }
 
 .footer-subscribe button:hover {
-    background-color: #e58888;
+    background-color: #da323e;
+}
+
+.popup-message {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #5f3e22; /* Mặc định là màu xanh */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 16px;
+    opacity: 0;
+    transition: opacity 0.3s, bottom 0.3s;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+/* Khi popup hiển thị */
+.popup-message.show {
+    opacity: 1;
+    bottom: 40px;
+}
+
+/* Thông báo lỗi */
+.popup-message.error {
+    background-color: #da323e;
+    color: #efebe9;
 }
