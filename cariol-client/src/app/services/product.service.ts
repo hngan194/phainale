@@ -70,18 +70,10 @@ getCategoriesWithProducts(): any[] {
 }
 
   // Lấy sản phẩm theo ID
-  getProductById(id: string): Observable<Product> {
-    const headers = new HttpHeaders().set("Content-Type", "application/json");
-    const requestOptions: Object = { 
-      headers: headers, 
-      responseType: "json" 
-    };
-
-    return this._http.get<Product>(`/products/${id}`, requestOptions).pipe(  // Lấy sản phẩm theo ID từ API
-      retry(3),
-      catchError(this.handleError)  // Sử dụng handleError để xử lý lỗi
-    );
+  getProductById(id: string) {
+    return this._http.get<Product>(`http://localhost:3002/product/${id}`);
   }
+  
 
   // Lấy tất cả các categoryName duy nhất từ các sản phẩm
   getCategories(): Observable<string[]> {

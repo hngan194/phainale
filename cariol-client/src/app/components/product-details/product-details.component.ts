@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { CurrencyPipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../../services/product.service';
 import { CartService } from '../../services/cart.service';
@@ -11,12 +13,8 @@ import { Product } from '../../models/product';  // Import class Product
   styleUrls: ['./product-details.component.css']
 })
 export class ProductDetailsComponent implements OnInit {
-  product: Product | null = null;  // Sử dụng kiểu Product từ class
-  selectedImage: string = ''; // Chuyển đổi image thành string
-  selectedColor: string = '';
+  product: Product | null = null;
   quantity: number = 1;
-  showDescription: boolean = false;
-  showSize: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -26,24 +24,24 @@ export class ProductDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id');  // Lấy id từ paramMap, đảm bảo là string
-
+    const id = this.route.snapshot.paramMap.get('id');
+    console.log('Product ID:', id);  // Kiểm tra id
+  
     if (id) {
-      // Lấy sản phẩm theo ID từ service
-      this.productService.getProductById(id).subscribe(product => {
-        if (product) {
+      this.productService.getProductById(id).subscribe(
+        (product) => {
+          console.log('Product from API:', product); // Kiểm tra sản phẩm từ API
           this.product = product;
-          // Kiểm tra và gán ảnh sản phẩm (image là string)
-          this.selectedImage = product.image || '';  // Nếu image là string, sử dụng trực tiếp
-          
-          this.selectedColor = product.color || '';  // Cập nhật lại theo model mới
-          this.saveToLocalStorage(id);  // Lưu vào localStorage
+          this.quantity = product.amount > 0 ? 1 : 0;
+        },
+        (error) => {
+          console.error('Error loading product:', error);
         }
-      });
+      );
     }
   }
+  
 
-  // Lưu sản phẩm đã xem vào localStorage
   private saveToLocalStorage(id: string): void {
     let viewedProducts: string[] = JSON.parse(localStorage.getItem('viewedProducts') || '[]');
     if (!viewedProducts.includes(id)) {
@@ -52,53 +50,44 @@ export class ProductDetailsComponent implements OnInit {
     }
   }
 
-  // Chọn ảnh sản phẩm
-  selectImage(image: string): void {
-    this.selectedImage = image;
-  }
-
-  // Chọn màu sắc sản phẩm
-  selectColor(color: string): void {
-    this.selectedColor = color;
-  }
-
-  // Tăng số lượng sản phẩm
   increaseQuantity(): void {
-    this.quantity++;
+    if (this.product && this.quantity < this.product.amount) {
+      this.quantity++;
+    }
   }
 
-  // Giảm số lượng sản phẩm
   decreaseQuantity(): void {
     if (this.quantity > 1) this.quantity--;
   }
 
-  // Mua ngay
+  getFormattedPrice(): string {
+    // Kiểm tra nếu product và price không undefined hoặc null
+    if (this.product && this.product.price) {
+      return this.product.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+    }
+    return '0 VND'; // Nếu không có giá trị, trả về giá trị mặc định
+  }  
+  
   buyNow(): void {
-    if (this.product) {
+    if (this.product && this.product.amount > 0) {
       this.router.navigate(['/order'], {
         queryParams: {
-          id: this.product._id,  // Cập nhật _id thay vì id
+          id: this.product._id,
           quantity: this.quantity,
-          color: this.selectedColor || 'default'
+          color: this.product.color
         }
       });
     }
   }
 
-  // Thêm vào giỏ hàng
   addToCart(): void {
     if (this.product) {
       this.cartService.addToCart({ ...this.product, quantity: this.quantity });
     }
   }
 
-  // Chuyển trạng thái hiển thị mô tả
-  toggleDescription(): void {
-    this.showDescription = !this.showDescription;
-  }
-
-  // Chuyển trạng thái hiển thị kích thước
-  toggleSize(): void {
-    this.showSize = !this.showSize;
+  isSpecsOpen = false;
+  toggleSpecs() {
+    this.isSpecsOpen = !this.isSpecsOpen;
   }
 }

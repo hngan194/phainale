@@ -1,7 +1,7 @@
 /* Thêm container cho các sản phẩm để hiển thị dạng lưới */
 .product-container {
   display: grid; /* Sử dụng CSS Grid */
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Tạo lưới tự động với các cột có độ rộng tối thiểu là 250px */
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Các cột tối thiểu 250px */
   gap: 20px; /* Khoảng cách giữa các sản phẩm */
   padding: 20px;
 }
@@ -44,4 +44,24 @@
 .product-description {
   font-size: 0.9rem;
   color: #666;
+}
+
+/* Canh phải khối chứa sort */
+.search-result {
+  display: flex;
+  justify-content: flex-end;
+  margin: 20px 0;
+}
+
+/* Style cho label và select */
+.sort-container label {
+  margin-right: 8px;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.sort-container select {
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
 }

@@ -1,5 +1,6 @@
+
 <div class="banner">
-  <img src="public/images/banner.png" alt="New Collection" class="banner-image">
+  <img src="assets/images/banner.png" alt="New Collection" class="banner-image">
 </div>
 
 <div class="container">
@@ -9,8 +10,8 @@
     <div class="product-grid">
       <div *ngFor="let product of category.products.slice(0, 4)" 
            class="product-card"
-           [routerLink]="['/product', product.id]">
-        <div class="product-image">
+           (click)="viewProduct(product._id)">        
+           <div class="product-image">
           <img [src]="product.image" alt="{{ product.name }}">
           <div class="color-options">
             <span *ngFor="let color of product.colors" 
@@ -21,7 +22,7 @@
         </div>
         
         <h3 class="product-name">{{ product.name }}</h3>
-        <p class="product-price">{{ product.price | currency:'VND':'symbol':'1.0-0' }}</p>
+        <p class="product-price">{{ product.price | currency:'VND':'symbol-narrow':'1.0-0' }}</p>
       </div>
     </div>
     

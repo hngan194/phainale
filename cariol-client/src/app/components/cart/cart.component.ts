@@ -1,5 +1,8 @@
-import { Component } from '@angular/core';
-import { PopupService } from '../../services/popup.service';  // Đảm bảo import đúng PopupService
+import { Component, OnInit } from '@angular/core';
+import { PopupService } from '../../services/popup.service';  
+import { Router } from '@angular/router';  // Import Router
+import { ChangeDetectorRef } from '@angular/core';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-cart',
@@ -7,41 +10,68 @@ import { PopupService } from '../../services/popup.service';  // Đảm bảo im
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css']
 })
-export class CartComponent {
-  cartItems = [
-    { name: 'Premium Canvas Backpack', category: 'Kem', image: 'assets/images/backpack1.png', price: 590000, quantity: 1 },
-    { name: 'Basic White T-Shirt', category: 'Thời trang', image: 'assets/images/tshirt.png', price: 150000, quantity: 2 }
-  ];
+export class CartComponent implements OnInit {
+  cartItems: any[] = [];
 
-  constructor(private popupService: PopupService) {}
+  constructor(
+    public popupService: PopupService,  // Đổi private -> public
+    private router: Router,
+    private cdr: ChangeDetectorRef,
+    private cartService: CartService
+  ) {
+    this.cartItems = this.cartService.getCartItems(); // Lấy giỏ hàng từ CartService
+  }
+
+  ngOnInit(): void {
+    this.cartItems = this.cartService.getCartItems(); // Lấy giỏ hàng khi component được khởi tạo
+  }
 
   openCart() {
-    this.popupService.openPopup('cart');  // Mở giỏ hàng
+    this.popupService.openPopup('cart');
   }
 
-  // Hàm đóng giỏ hàng
   closeCart(): void {
-    this.popupService.closePopup();  // Đóng giỏ hàng thông qua PopupService
+    this.popupService.closePopup();
   }
 
-  // Thay đổi số lượng sản phẩm
   changeQuantity(item: any, change: number): void {
     item.quantity += change;
     if (item.quantity < 1) {
-      item.quantity = 1; // Đảm bảo số lượng không nhỏ hơn 1
+      item.quantity = 1;
     }
   }
 
-  // Xóa sản phẩm khỏi giỏ hàng
   removeItem(item: any): void {
-    const index = this.cartItems.indexOf(item);
-    if (index > -1) {
-      this.cartItems.splice(index, 1);
-    }
+    this.cartService.removeItem(item); // Xóa sản phẩm khỏi service
+    this.cartItems = this.cartService.getCartItems(); // Cập nhật danh sách hiển thị
   }
 
-  // Tính tổng giá trị của giỏ hàng
   getTotal(): number {
     return this.cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  }
+
+  goToCartDetail() {
+    this.popupService.closePopup(); // Đóng popup trước
+    setTimeout(() => {
+      this.router.navigate(['/cart-detail']); // Điều hướng sau khi đóng
+    }, 100); // Đợi 100ms để tránh lỗi
+  }
+
+  // Hàm buyNow() giống như yêu cầu
+  buyNow(): void {
+    // Kiểm tra sản phẩm đầu tiên trong giỏ hàng
+    if (this.cartItems.length > 0) {
+      this.popupService.closePopup();
+      const item = this.cartItems[0]; // Giả sử bạn muốn mua sản phẩm đầu tiên trong giỏ
+      if (item && item.amount > 0) {
+        this.router.navigate(['/order'], {
+          queryParams: {
+            id: item._id, // ID của sản phẩm
+            quantity: item.quantity, // Số lượng sản phẩm
+            color: item.color // Màu sắc của sản phẩm
+          }
+        });
+      }
+    }
   }
 }

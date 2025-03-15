@@ -90,6 +90,21 @@ export class AuthService {
     });
   }
 
+  getUserId(): string | null {
+    const user = localStorage.getItem('user');
+    return user ? JSON.parse(user)._id : null;
+  }
+
+  getUserName(): string | null {
+    const user = localStorage.getItem('user');
+    return user ? JSON.parse(user).name : null;
+  }
+  
+  getUserEmail(): string | null {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    return user.email || null;
+  }
+  
   // 🟢 Đăng ký tài khoản
   register(user: any) {
     console.log("🔹 Gửi request đăng ký:", user);

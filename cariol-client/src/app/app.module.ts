@@ -4,6 +4,7 @@ import { AppRoutingModule } from './app-routing.module';  // Import AppRoutingMo
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // Nếu bạn sử dụng animations
+import { CurrencyPipe } from '@angular/common'; // Import CurrencyPipe
 // Các components
 import { AppComponent } from './app.component';
 import { AboutusComponent } from './components/aboutus/aboutus.component';
@@ -30,6 +31,8 @@ import { ProductService } from './services/product.service';
 import { CartService } from './services/cart.service';
 import { EditProfileComponent } from './components/edit-profile/edit-profile.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
+import { CartDetailComponent } from './components/cart-detail/cart-detail.component';
+import { VoucherService } from './services/voucher.service';
 
 @NgModule({
   declarations: [
@@ -50,8 +53,9 @@ import { ChangePasswordComponent } from './components/change-password/change-pas
     BlogDetailComponent,
     CommonQuestionComponent,
     EditProfileComponent,
-    ChangePasswordComponent
-  ],
+    ChangePasswordComponent,
+    CartDetailComponent,
+    ],
   imports: [
     BrowserModule,
     HttpClientModule,

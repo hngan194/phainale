@@ -1,12 +1,26 @@
-<div *ngIf="products.length > 0; else noProducts">
-  <!-- Container chứa các sản phẩm -->
+<!-- Bộ lọc & sắp xếp -->
+<div class="search-result">
+  <div class="sort-container">
+    <label for="sort">SẮP XẾP THEO</label>
+    <select id="sort" (change)="updateSortOption($event)">
+      <option value="default">Mặc định</option>
+      <option value="nameAsc">Tên A-Z</option>
+      <option value="priceAsc">Giá thấp - cao</option>
+      <option value="priceDesc">Giá cao - thấp</option>
+    </select>
+  </div>
+</div>
+
+<!-- Hiển thị danh sách sản phẩm -->
+<div *ngIf="filteredProducts.length > 0; else noProducts">
   <div class="product-container">
-    <div *ngFor="let product of products" class="product-card">
-      <!-- Kiểm tra nếu image có giá trị hợp lệ -->
-      <img [src]="product.image" alt="{{ product.name }}" class="product-image" />
-      
-      <h3 class="product-name">{{ product.name }}</h3>
-      <p class="product-price">{{ product.price | currency:'VND':'symbol':'1.0-0' }}</p>
+    <div *ngFor="let product of filteredProducts" class="product-card">
+      <!-- Điều hướng đến trang chi tiết sản phẩm khi click vào thẻ div sản phẩm -->
+      <div class="product-link" (click)="viewProduct(product._id)">
+        <img [src]="product.image" alt="{{ product.name }}" class="product-image" />
+        <h3 class="product-name">{{ product.name }}</h3>
+        <p class="product-price">{{ product.price | currency:'VND':'symbol':'1.0-0' }}</p>
+      </div>
     </div>
   </div>
 </div>

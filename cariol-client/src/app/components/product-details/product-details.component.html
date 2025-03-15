@@ -1,54 +1,99 @@
-<div class="product-container" *ngIf="product">
-    <!-- Hình ảnh sản phẩm -->
-    <div class="image-section">
-      <img [src]="selectedImage" [alt]="product.name" class="main-image">
-      <div class="image-thumbnails">
-        <!-- Nếu image là chuỗi, sử dụng một hình ảnh chính -->
-        <img *ngIf="product.image" 
-             [src]="product.image" 
-             [alt]="product.name" 
-             (click)="selectImage(product.image)">
-      </div>
+
+<!-- <div class="product-container" *ngIf="product">
+
+  <div class="image-section">
+    <img [src]="product.image" [alt]="product.name" class="main-image">
+  </div>
+
+  
+  <div class="info-section">
+    <h2>{{ product.name }}</h2>
+    <p class="price">{{ getFormattedPrice()  }}</p>
+
+
+    <p *ngIf="product.description">{{ product.description }}</p>
+
+  
+    <div class="product-details" *ngIf="product.infor">
+      <p>{{ product.infor }}</p>
     </div>
-  
-    <!-- Thông tin sản phẩm -->
-    <div class="info-section">
-      <h2>{{ product.name }}</h2>
-      <p>{{ product.price | currency:'VND':'symbol':'1.0-0' }}</p>
-  
-      <!-- Màu sắc -->
-      <div class="color-options" *ngIf="product.color">
-        <div class="color-circle" 
-             [style.backgroundColor]="product.color"
-             (click)="selectColor(product.color)">
-        </div>
-      </div>
-  
-      <!-- Chọn số lượng -->
-      <div class="quantity-selector">
-        <button (click)="decreaseQuantity()">-</button>
-        <input type="number" [(ngModel)]="quantity" min="1">
-        <button (click)="increaseQuantity()">+</button>
-      </div>
-  
-      <!-- Nút hành động -->
-      <div class="action-buttons">
-        <button (click)="buyNow()">MUA NGAY</button>
-        <button (click)="addToCart()">THÊM VÀO GIỎ</button>
-      </div>
-  
-      <!-- Mô tả sản phẩm -->
-      <div class="toggle-section">
-        <h3 (click)="toggleDescription()">Mô tả sản phẩm</h3>
-        <p *ngIf="showDescription && product.description">{{ product.description }}</p>
-      </div>
-  
-      <!-- Loại bỏ Kích thước nếu không có -->
-      <!-- Nếu trường size không còn, không cần phần này -->
-      <!-- <div class="toggle-section" *ngIf="product.size">
-        <h3 (click)="toggleSize()">Kích thước sản phẩm</h3>
-        <p *ngIf="showSize && product.size">{{ product.size }}</p>
-      </div> -->
+
+
+    <div class="color-options" *ngIf="product.color">
+      <span>Màu sắc:</span>
+      <div class="color-circle" [style.backgroundColor]="product.color"></div>
+    </div>
+
+   
+    <p *ngIf="product.amount > 0">Còn lại: {{ product.amount }} sản phẩm</p>
+    <p *ngIf="product.amount === 0" class="out-of-stock">Hết hàng</p>
+
+
+    <div class="quantity-selector">
+      <button (click)="decreaseQuantity()" [disabled]="quantity <= 1">-</button>
+      <input type="number" [(ngModel)]="quantity" min="1" [max]="product.amount">
+      <button (click)="increaseQuantity()" [disabled]="quantity >= product.amount">+</button>
+    </div>
+
+    
+    <div class="action-buttons">
+      <button (click)="buyNow()" [disabled]="!product ||product.amount === 0">MUA NGAY</button>
+      <button (click)="addToCart()" [disabled]="!product ||product.amount === 0">THÊM VÀO GIỎ</button>
     </div>
   </div>
-  
+</div> -->
+
+
+<div class="product-container" *ngIf="product">
+  <div class="product-layout">
+    <div class="image-section">
+      <div class="main-image-container">
+        <!-- <button class="nav-button prev">&#10094;</button> -->
+        <img [src]="product.image" [alt]="product.name" class="main-image">
+        <!-- <button class="nav-button next">&#10095;</button> -->
+      </div>
+    </div>
+    
+    <div class="info-section">
+      <h2 class="product-title">{{ product.name }}</h2>
+      <p class="price">{{ getFormattedPrice() }}</p>
+      
+      <p class="description" *ngIf="product.description">{{ product.description }}</p>
+      
+      <div class="quantity-selector">
+        <span>Số lượng</span>
+        <div class="quantity-controls">
+          <button (click)="decreaseQuantity()" [disabled]="quantity <= 1">-</button>
+          <input type="number" [(ngModel)]="quantity" min="1" [max]="product.amount">
+          <button (click)="increaseQuantity()" [disabled]="quantity >= product.amount">+</button>
+        </div>
+        <div>
+          <p *ngIf="product.amount > 0" class="stock-status">(Còn lại: {{ product.amount }} sản phẩm)</p>
+          <p *ngIf="product.amount === 0" class="out-of-stock">Hết hàng</p>
+        </div>
+      </div>
+      
+      <div class="color-options" *ngIf="product.color">
+        <span>Màu sắc</span>
+        <div class="color-circle" [style.backgroundColor]="product.color"></div>
+      </div>
+      
+      <div class="action-buttons">
+        <button class="buy-now" (click)="buyNow()" [disabled]="!product || product.amount === 0">MUA NGAY</button>
+        <button class="add-to-cart" (click)="addToCart()" [disabled]="!product || product.amount === 0">THÊM VÀO GIỎ</button>
+      </div>
+      
+      <div class="product-specs">
+        <div class="specs-header" (click)="toggleSpecs()">
+          <span>Kích thước sản phẩm</span>
+          <span class="dropdown-icon">{{ isSpecsOpen ? '&#9650;' : '&#9660;' }}</span>
+        </div>
+        <div class="specs-content" *ngIf="product.infor" [ngClass]="{'collapsed': !isSpecsOpen}">
+          <p>{{ product.infor }}</p>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+</div>

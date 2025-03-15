@@ -86,7 +86,7 @@
         <div class="coupon-section">
           <div class="coupon-input">
             <input type="text" [(ngModel)]="discountCode" name="discountCode" placeholder="Mã code">
-            <button class="btn-apply">Áp dụng</button>
+            <button class="btn-apply" (click)="applyDiscount(discountCode)">Áp dụng</button>
           </div>
         </div>
   

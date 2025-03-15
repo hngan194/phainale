@@ -13,13 +13,14 @@ import { ProductsComponent } from './components/products/products.component';
 import { CommonQuestionComponent } from './components/common-question/common-question.component';
 import { EditProfileComponent } from './components/edit-profile/edit-profile.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
+import { CartDetailComponent } from './components/cart-detail/cart-detail.component';
 
 const routes : Routes = [
   { path: "aboutus", component: AboutusComponent },
   { path: "blog", component: BlogComponent},
   { path: '', component: HomepageComponent }, // Trang chủ
   { path: 'common-question', component: CommonQuestionComponent},
-  { path: 'product/:id', component: ProductDetailsComponent }, // Chi tiết sản phẩm
+  { path: 'products/:id', component: ProductDetailsComponent }, // Chi tiết sản phẩm
   { path: 'order', component: OrderComponent },
   { path: 'payment', component: PaymentComponent },
   { path: 'categories', component: CategoriesComponent },
@@ -29,7 +30,7 @@ const routes : Routes = [
   { path: 'edit-profile', component: EditProfileComponent },
   { path: 'homepage', component: HomepageComponent },
   { path: 'change-password', component: ChangePasswordComponent },
-
+  { path: 'cart-detail', component: CartDetailComponent},
 ]
 
 @NgModule({
